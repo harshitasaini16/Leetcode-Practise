@@ -1,26 +1,21 @@
-
 #define ll long long
 class Solution {
 public:
-    
     int ans;
     void merge(int l,int m,int r,vector<int>& nums){
-        int i=l,j=m+1 ;
-        
-        while(i <= m && j <= r)
-        {
-            if((ll)nums[i] > (ll)2*nums[j])    // used ll to avoid overflow error
-            {
-                ans += m- i + 1  ;
-                j++ ;
-            }else 
-            {
-                i++ ;
+        int i=l;
+        int j=m+1;
+        vector<int>v;
+        while(i<=m && j<=r){
+            if((ll)nums[i]>((ll)2*nums[j])){
+                ans+=(m-i+1);
+                j++;
+            }
+            else{
+                i++;
             }
         }
-        
-        sort(nums.begin()+l,nums.begin() + r + 1) ;
-
+        sort(nums.begin()+l,nums.begin()+r+1);
     }
     void fun(int l,int r,vector<int>& nums){
         int s=0;
