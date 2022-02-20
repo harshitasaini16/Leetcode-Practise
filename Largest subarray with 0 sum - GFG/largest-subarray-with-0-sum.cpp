@@ -10,25 +10,25 @@ using namespace std;
 
 class Solution{
     public:
-    int maxLen(vector<int>&a, int n)
+    int maxLen(vector<int>&A, int n)
     {   
         // Your code here
-        int mx=0;
-        int s=0;
-        map<int,int>m;
-        for(int i=0;i<n;i++){
-            s+=a[i];
+        int  s=0;
+        int ans=0;
+        unordered_map<int,int>m;
+        for(int i=0;i<A.size();i++){
+            s+=A[i];
             if(s==0){
-                mx=max(mx,i+1);
+                ans=max(ans,i+1);
             }
-            if(m.find(s)!=m.end()){
-                mx=max(mx,i-m[s]);
-            }
-            else{
+            if(m.find(s)==m.end()){
                 m[s]=i;
             }
+            else{
+                ans=max(ans,i-m[s]);
+            }
         }
-        return mx;
+        return ans;
     }
 };
 
