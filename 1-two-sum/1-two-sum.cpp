@@ -3,7 +3,7 @@ public:
     vector<int> twoSum(vector<int>& nums, int target) {
         map<int,int>m;
         for(int i=0;i<nums.size();i++){
-            if(i!=0 && m.find(target-nums[i])!=m.end()){
+            if(m.find(target-nums[i])!=m.end()){
                 return {m[target-nums[i]],i};
             }
             m[nums[i]]=i;
