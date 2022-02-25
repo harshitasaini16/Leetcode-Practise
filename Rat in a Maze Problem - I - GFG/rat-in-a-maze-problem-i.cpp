@@ -10,27 +10,24 @@ using namespace std;
 
 class Solution{
     public:
-    int dx[4]={-1,0,1,0};
-    int dy[4]={0,-1,0,1};
-    char d[4]={'U','L','D','R'};
     vector<string>ans;
-    void fun(vector<vector<int>>mat,int n,string s,int x,int y){
-        if(x<0 || y<0 || x>=n || y>=n || mat[x][y]==0){
+    void fun(vector<vector<int>>arr,int i,int j,string s,int n){
+        if(i<0 or j<0 || i>=n or j>=n or arr[i][j]==0){
             return;
         }
-        if(x==n-1 && y==n-1){
+        if(i==n-1 && j==n-1){
             ans.push_back(s);
             return;
         }
-        mat[x][y]=0;
-        for(int i=0;i<4;i++){
-            fun(mat,n,s+d[i],x+dx[i],y+dy[i]);
-        }
+        arr[i][j]=0;
+        fun(arr,i+1,j,s+"D",n);
+        fun(arr,i-1,j,s+"U",n);
+        fun(arr,i,j+1,s+"R",n);
+        fun(arr,i,j-1,s+"L",n);
     }
-    vector<string> findPath(vector<vector<int>> &mat, int n) {
-        // Your code goes here
-        string s="";
-        fun(mat,n,s,0,0);
+    vector<string> findPath(vector<vector<int>> &m, int n) {
+        ans.clear();
+        fun(m,0,0,"",n);
         return ans;
     }
 };
