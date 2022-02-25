@@ -14,18 +14,18 @@ public:
         ListNode *h=head;
         int i=0;
         while(i<n && h!=NULL){
-            h=h->next;
             i++;
+            h=h->next;
         }
         if(h==NULL){
             return head->next;
         }
-        ListNode *l=head;
+        ListNode *h2=head;
         while(h->next!=NULL){
+            h2=h2->next;
             h=h->next;
-            l=l->next;
         }
-        l->next=l->next->next;
+        h2->next=h2->next->next;
         return head;
     }
 };
