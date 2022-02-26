@@ -14,7 +14,7 @@ public:
                 }
             }
             else if(mid%2!=0){
-                if(nums[mid]!=nums[mid+1]){
+                if(nums[mid]==nums[mid-1]){
                     l=mid+1;
                 }
                 else{
