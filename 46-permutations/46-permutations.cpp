@@ -7,12 +7,13 @@ public:
             return;
         }
         for(int i=x;i<nums.size();i++){
-            swap(nums[i],nums[x]);
+            swap(nums[x],nums[i]);
             fun(x+1,nums);
-            swap(nums[i],nums[x]);
+            swap(nums[x],nums[i]);
         }
     }
     vector<vector<int>> permute(vector<int>& nums) {
+        ans.clear();
         fun(0,nums);
         return ans;
     }
