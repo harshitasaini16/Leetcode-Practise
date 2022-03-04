@@ -4,27 +4,25 @@ using namespace std;
 
  // } Driver Code Ends
 class Solution{
-		
-
 	public:
 	int maxSumIS(int arr[], int n)  
 	{  
 	    // Your code goes here
-	    vector<int>v(n,0);
+	    vector<long long>dp(n);
 	    for(int i=0;i<n;i++){
-	        v[i]=arr[i];
+	        dp[i]=arr[i];
 	    }
-	    int x=arr[0];
+	    long long ans=arr[0];
 	    for(int i=1;i<n;i++){
 	        for(int j=0;j<i;j++){
 	            if(arr[j]<arr[i]){
-	                v[i]=max(v[i],v[j]+arr[i]);
-	                x=max(x,v[i]);
+	                dp[i]=max(dp[i],arr[i]+dp[j]);
 	            }
 	        }
+	        ans=max(ans,dp[i]);
 	    }
-	    return x;
-	}  
+	    return (int)ans;
+	}
 };
 
 // { Driver Code Starts.
