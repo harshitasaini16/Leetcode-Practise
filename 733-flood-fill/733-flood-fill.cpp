@@ -1,20 +1,17 @@
 class Solution {
 public:
-    void fun(vector<vector<int>>&mat, int x, int y, int n,int m,int col,int nc){
-        if(x<0 || y<0 || x>=n || x>=m || mat[x][y]!=col || mat[x][y]==nc){
+    void fun(int sr,int sc,vector<vector<int>>&image,int oc,int nc){
+        if(sr<0 || sc<0 || sr>=image.size() || sc>=image[0].size() || image[sr][sc]!=oc || image[sr][sc]==nc){
             return;
         }
-        mat[x][y]=nc;
-        fun(mat,x+1,y,n,m,col,nc);
-        fun(mat,x-1,y,n,m,col,nc);
-        fun(mat,x,y+1,n,m,col,nc);
-        fun(mat,x,y-1,n,m,col,nc);
+        image[sr][sc]=nc;
+        fun(sr+1,sc,image,oc,nc);
+        fun(sr-1,sc,image,oc,nc);
+        fun(sr,sc+1,image,oc,nc);
+        fun(sr,sc-1,image,oc,nc);
     }
-    vector<vector<int>> floodFill(vector<vector<int>>&mat, int sr, int sc, int nc) {
-        int col=mat[sr][sc];
-        int n=mat.size();
-        int m=mat[0].size();
-        fun(mat,sr,sc,n,m,col,nc);
-        return mat;
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+        fun(sr,sc,image,image[sr][sc],newColor);
+        return image;
     }
 };
