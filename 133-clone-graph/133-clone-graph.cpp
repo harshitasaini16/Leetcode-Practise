@@ -25,14 +25,14 @@ public:
         if(node==NULL){
             return NULL;
         }
-        if(clones.find(node)==clones.end()){
-            clones[node]=new Node(node->val,{});
+        if(m.find(node)==m.end()){
+            m[node]=new Node(node->val,{});
             for(Node* i:node->neighbors){
-                clones[node]->neighbors.push_back(cloneGraph(i));
+                m[node]->neighbors.push_back(cloneGraph(i));
             }
         }
-        return clones[node];
+        return m[node];
     }
-private:
-    map<Node*,Node*>clones;
+ private:
+    map<Node*,Node*>m;
 };
