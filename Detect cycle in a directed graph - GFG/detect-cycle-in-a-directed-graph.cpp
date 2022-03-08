@@ -10,7 +10,7 @@ class Solution {
         vis[x]=true;
         fvis[x]=true;
         for(auto i:adj[x]){
-            if(vis[i]==false && fvis[i]==fals){
+            if(vis[i]==false){
                 if(fun(i,vis,fvis,adj)){
                     return true;
                 }
