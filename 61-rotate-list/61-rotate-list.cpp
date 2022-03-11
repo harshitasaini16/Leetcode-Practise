@@ -10,34 +10,34 @@
  */
 class Solution {
 public:
-    int size(ListNode *head){
+    int size(ListNode* head){
         if(head==NULL){
             return 0;
         }
         return 1+size(head->next);
     }
     ListNode* rotateRight(ListNode* head, int k) {
-        int n=size(head);
-        if(n==0){
+        if(head==NULL){
             return NULL;
         }
+        int n=size(head);
         k=k%n;
         if(k==0){
             return head;
         }
-        int p=(n-k);
+        k=n-k;
         ListNode *h=head;
-        while(p>1){
+        while(k>1 && h!=NULL){
+            k--;
             h=h->next;
-            p--;
         }
-        ListNode *hd=h->next;
-        ListNode *t=h;
-        while(t->next!=NULL){
-            t=t->next;
+        ListNode *kp=h->next;
+        ListNode *lh=h->next;
+        while(kp->next!=NULL){
+            kp=kp->next;
         }
-        t->next=head;
+        kp->next=head;
         h->next=NULL;
-        return hd;
+        return lh;
     }
 };
