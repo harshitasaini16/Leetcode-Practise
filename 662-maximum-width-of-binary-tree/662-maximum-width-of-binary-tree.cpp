@@ -1,35 +1,48 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
     int widthOfBinaryTree(TreeNode* root) {
         if(root==NULL){
             return 0;
         }
-        queue<pair<TreeNode*,long long  >>q;
+        queue<pair<TreeNode*,int>>q;
         q.push({root,0});
-        long long ans=1;
+        int ans=0;
         while(!q.empty()){
-            long long k=q.size();
-            long long  minn=q.front().second;
-            long long f,l;
-            for(int i=0;i<k;i++){
-                long long id=q.front().second-minn;
-                TreeNode*tt=q.front().first;
+            int size=q.size();
+            int mn=INT_MAX;
+            int mx=INT_MIN;
+            int s=q.front().second;
+            while(size--){
+                auto x=q.front().first;
+                int y=q.front().second;
+                y=y-s;
+                if(y<mn){
+                    mn=y;
+                }
+                if(y>mx){
+                    mx=y;
+                }
                 q.pop();
-                if(i==0){
-                    f=id;
+                if(x->left!=NULL){
+                    q.push({x->left,(long long)y*2+1});
                 }
-                if(i==k-1){
-                    l=id;
-                }
-                if(tt->left){
-                    q.push({tt->left,2*id +1});
-                }
-                if(tt->right){
-                    q.push({tt->right,2*id +2});
+                if(x->right!=NULL){
+                    q.push({x->right,(long long)y*2+2});
                 }
             }
-            ans=max(ans,(l-f)+1);
+            ans=max(ans,mx-mn+1);
         }
-        return (int)ans;
+        return ans;
     }
 };
