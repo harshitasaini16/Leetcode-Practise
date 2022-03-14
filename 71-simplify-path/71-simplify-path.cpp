@@ -2,45 +2,50 @@ class Solution {
 public:
     string simplifyPath(string path) {
         int n=path.length();
+        if(path[n-1]!='/'){
+            path+='/';
+            n++;
+        }
         stack<string>s;
-                
-        if(path[n-1]!='/') // so that initially path always ends with '/'
-            path+="/", ++n;
-            
-        int i=1; // since path always starts from '/'
-        string ans="";
         string temp="";
+        int i=1;
         while(i<n){
-            
-            if(path[i]=='/'){ // check only if we encounter '/'
-                
+            if(path[i]=='/'){
                 if(temp=="" || temp=="."){
-                    // ignore
+                    
                 }
                 else if(temp==".."){
-                    if(!s.empty()) s.pop(); // pop the top element from stack if exists
+                    if(s.empty()){
+                        
+                    }
+                    else{
+                      s.pop();   
+                    }
                 }
                 else{
-                    s.push(temp); //push the directory or file name to stack
+                    s.push(temp);
                 }
-                
-                temp=""; // reset temp
+                temp="";
             }
             else{
-                temp.push_back(path[i]); // else append to temp
+                temp+=path[i];
             }
-            
-            ++i; // increment index
+            i++;
         }
-        
-        while(!s.empty()){ // add all the stack elements
-            ans="/"+s.top()+ans;
+        stack<string>st;
+        string ans="";
+        while(!s.empty()){
+            st.push(s.top());
             s.pop();
         }
-        
-        if(ans.length()==0) // if no directory or file is present
-            ans="/"; // minimum root directory must be present in ans
-        
+        while(!st.empty()){
+            ans+='/';
+            ans+=st.top();
+            st.pop();
+        }
+        if(ans.length()==0){
+            ans+='/';
+        }
         return ans;
     }
 };
