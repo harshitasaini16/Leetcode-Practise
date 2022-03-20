@@ -1,18 +1,33 @@
 class Solution {
 public:
+    unordered_map<int,int>vis;
+    int fun(vector<pair<int,int>>&v,int i,int n){
+        if(i>=n){
+            return 0;
+        }
+        if(vis[i]!=0){
+            return vis[i];
+        }
+        if(i==n-1){
+            return v[i].first*v[i].second;
+        }
+        if(v[i].first+1!=v[i+1].first){
+            return vis[i]=v[i].first*v[i].second+fun(v,i+1,n);
+        }
+        int x=v[i].first*v[i].second+fun(v,i+2,n);
+        int y=fun(v,i+1,n);
+        return vis[i]=max(x,y);
+    }
     int deleteAndEarn(vector<int>& nums) {
-        int n=nums.size();
-        int mx=*max_element(nums.begin(),nums.end());
-        vector<int>count(mx+1,0);
-        for(int i=0;i<n;i++){
-            count[nums[i]]++;
+        vector<pair<int,int>>v;
+        map<int,int>m;
+        for(auto x:nums){
+            m[x]++;
         }
-        vector<int>dp(mx+1,0);
-        dp[0]=0;
-        dp[1]=count[1];
-        for(int i=2;i<=mx;i++){
-            dp[i]=max(dp[i-1],dp[i-2]+(i*count[i]));
+        for(auto [k,vv]:m){
+            v.push_back({k,vv});
         }
-        return dp[mx];
+        int n=v.size();
+        return fun(v,0,n);
     }
 };
