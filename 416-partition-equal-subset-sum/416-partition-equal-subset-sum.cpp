@@ -1,30 +1,32 @@
 class Solution {
 public:
-    map<pair<int,int>,int>dp;
-    bool fun(vector<int>& nums,int n,int s){
-        if(s==0){
+    int dp[201][10001];
+    bool fun(int n,vector<int>& nums,int x){
+        if(x==0){
             return true;
         }
-        if(n==0){
+        if(dp[n][x]!=-1){
+            return dp[n][x];
+        }
+        if(n<=0){
             return false;
         }
-        if(dp.find({n,s})!=dp.end()){
-            return dp[{n,s}];
+        if(nums[n-1]<=x){
+            return dp[n][x]=(fun(n-1,nums,x) || fun(n-1,nums,x-nums[n-1]));
         }
-        if(nums[n-1]<=s){
-            return dp[{n,s}]=(fun(nums,n-1,s-nums[n-1]) || fun(nums,n-1,s));
+        else{
+            return dp[n][x]=fun(n-1,nums,x);
         }
-        return dp[{n,s}]=fun(nums,n-1,s);
     }
     bool canPartition(vector<int>& nums) {
         int s=0;
+        memset(dp,-1,sizeof(dp));
         for(int i=0;i<nums.size();i++){
             s+=nums[i];
         }
-        dp.clear();
         if(s%2!=0){
             return false;
         }
-        return fun(nums,nums.size(),s/2);
+        return fun(nums.size()-1,nums,s/2);
     }
 };
