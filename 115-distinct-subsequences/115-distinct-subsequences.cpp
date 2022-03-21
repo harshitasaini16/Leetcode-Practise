@@ -1,10 +1,10 @@
 class Solution {
 public:
     int numDistinct(string s, string t) {
+        int mod=1e9+7;
         int n=s.length();
         int m=t.length();
         int mat[n+1][m+1];
-        int mod=1e9+7;
         for(int i=0;i<=n;i++){
             for(int j=0;j<=m;j++){
                 if(i==0 && j==0){
@@ -24,7 +24,7 @@ public:
                     mat[i][j]=(mat[i-1][j-1]+mat[i-1][j])%mod;
                 }
                 else{
-                    mat[i][j]=(mat[i-1][j])%mod;
+                    mat[i][j]=mat[i-1][j];
                 }
             }
         }
