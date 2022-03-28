@@ -1,17 +1,22 @@
 class Solution {
 public:
-    void fun(int sr,int sc,vector<vector<int>>&image,int oc,int nc){
-        if(sr<0 || sc<0 || sr>=image.size() || sc>=image[0].size() || image[sr][sc]!=oc || image[sr][sc]==nc){
+    map<pair<int,int>,int>dp;
+    void fun(int x,int y,vector<vector<int>>& image,int oc,int nc,int n,int m){
+        if(x<0 || y<0 || x>=n || y>=m || image[x][y]!=oc || dp[{x,y}]!=0){
             return;
         }
-        image[sr][sc]=nc;
-        fun(sr+1,sc,image,oc,nc);
-        fun(sr-1,sc,image,oc,nc);
-        fun(sr,sc+1,image,oc,nc);
-        fun(sr,sc-1,image,oc,nc);
+        dp[{x,y}]++;
+        image[x][y]=nc;
+        fun(x+1,y,image,oc,nc,n,m);
+        fun(x-1,y,image,oc,nc,n,m);
+        fun(x,y+1,image,oc,nc,n,m);
+        fun(x,y-1,image,oc,nc,n,m);
     }
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
-        fun(sr,sc,image,image[sr][sc],newColor);
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int nc) {
+        dp.clear();
+        int n=image.size();
+        int m=image[0].size();
+        fun(sr,sc,image,image[sr][sc],nc,n,m);
         return image;
     }
 };
