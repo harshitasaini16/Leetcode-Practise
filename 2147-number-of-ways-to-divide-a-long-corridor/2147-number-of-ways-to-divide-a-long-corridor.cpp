@@ -1,38 +1,30 @@
 class Solution {
 public:
-	int mod = 1e9 + 7;
+    int mod=1e9+7;
     int dp[100005][3];
-    
-    int solve(string& s, int cnt, int idx, int n) {
-        if(idx == n) {
-            return (cnt == 2);
-        }
-        
-        if(dp[idx][cnt]  != -1) return dp[idx][cnt];
-        
-        int res = 0;
-        
-        if(cnt == 2) {
-            if(s[idx] == 'S') {
-                res += solve(s, 1, idx+1, n);
+    int fun(int x,string &s,int c){
+        if(x>=s.length()){
+            if(c==2){
+                return 1;
             }
-            else {
-                res += solve(s, 0, idx+1, n) + solve(s, cnt, idx+1, n);
-            }
+            return 0;
         }
-        else {
-            res += solve(s, cnt + (s[idx] == 'S') , idx+1, n);
+        if(dp[x][c]!=-1){
+            return dp[x][c];
         }
-        
-        return dp[idx][cnt] = res % mod;
+        if(s[x]=='S'){
+            c++;
+        }
+        if(c==2){
+            return dp[x][c]=(fun(x+1,s,0)+fun(x+1,s,c))%mod;
+        }
+        if(c<2){
+            return dp[x][c]=fun(x+1,s,c)%mod;
+        }
+        return 0;
     }
-    
-    int numberOfWays(string corridor) {
-        
-        int n = corridor.size();
-        
-        memset(dp, -1, sizeof(dp));
-        
-        return solve(corridor, 0, 0, n);
+    int numberOfWays(string s) {
+        memset(dp,-1,sizeof(dp));
+        return fun(0,s,0)%mod;
     }
 };
