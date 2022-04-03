@@ -1,9 +1,9 @@
 class Solution {
 public:
     void nextPermutation(vector<int>& nums) {
-        int x=-1;
         int n=nums.size();
-        for(int i=0;i<n-1;i++){
+        int x=-1;
+        for(int i=0;i<nums.size()-1;i++){
             if(nums[i]<nums[i+1]){
                 x=i;
             }
@@ -12,13 +12,13 @@ public:
             sort(nums.begin(),nums.end());
             return;
         }
-        int y;
-        for(int j=x+1;j<n;j++){
-            if(nums[j]>nums[x]){
-                y=j;
+        int y=1;
+        for(int i=x;i<n;i++){
+            if(nums[i]>nums[x]){
+                y=i;
             }
         }
         swap(nums[x],nums[y]);
-        sort(nums.begin()+x+1,nums.end());
+        reverse(nums.begin()+x+1,nums.end());
     }
 };
