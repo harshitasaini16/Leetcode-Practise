@@ -2,31 +2,31 @@ class Solution {
 public:
     int trap(vector<int>& height) {
         int n=height.size();
-        int l=0;
-        int lmx=height[l];
+        int lmx=height[0];
+        int rmx=height[n-1];
+        int l=1;
         int r=n-1;
-        int s=0;
-        int rmx=height[r];
+        int ans=0;
         while(l<=r){
-            if(height[l]<=height[r]){
-                if(height[l]>lmx){
-                    lmx=height[l];
+            if(lmx<=rmx){
+                if(height[l]<=lmx){
+                    ans+=lmx-height[l];
                 }
                 else{
-                    s+=lmx-height[l];
+                    lmx=height[l];
                 }
                 l++;
             }
             else{
-                if(height[r]>rmx){
-                    rmx=height[r];
+                if(height[r]<=rmx){
+                    ans+=rmx-height[r];
                 }
                 else{
-                    s+=rmx-height[r];
+                    rmx=height[r];
                 }
                 r--;
             }
         }
-        return s;
+        return ans;
     }
 };
