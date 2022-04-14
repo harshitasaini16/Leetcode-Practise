@@ -1,67 +1,58 @@
 class Solution {
 public:
     vector<vector<string>>ans;
-    bool issafe(int i,int j,vector<string>mat,int n){
-        for(int x=0;x<n;x++){
-            if(mat[x][j]=='Q'){
+    bool valid(int x,int y,int n,vector<string>v){
+        for(int i=0;i<n;i++){
+            if(v[x][i]=='Q'){
                 return false;
             }
         }
-        int x=i,y=j;
-        while(x>=0 && y>=0){
-            if(mat[x][y]=='Q'){
+        for(int i=0;i<n;i++){
+            if(v[i][y]=='Q'){
                 return false;
             }
-            x--;
-            y--;
         }
-        x=i,y=j;
-        while(x<n && y>=0){
-            if(mat[x][y]=='Q'){
+        int i=x,j=y;
+        while(i>=0 && j>=0){
+            if(v[i][j]=='Q'){
                 return false;
             }
-            x++;
-            y--;
+            i--;
+            j--;
         }
-        x=i,y=j;
-        while(x>n && y>n){
-            if(mat[x][y]=='Q'){
+        i=x,j=y;
+        while(i>=0 && j<n){
+            if(v[i][j]=='Q'){
                 return false;
             }
-            x++;
-            y++;
-        }
-        x=i,y=j;
-        while(x>=0 && y<n){
-            if(mat[x][y]=='Q'){
-                return false;
-            }
-            x--;
-            y++;
+            i--;
+            j++;
         }
         return true;
     }
-    void fun(int x,int n,vector<string>mat){
+    void fun(int x,int n,vector<string>v){
         if(x==n){
-            ans.push_back(mat);
+            ans.push_back(v);
             return;
         }
         for(int i=0;i<n;i++){
-            if(issafe(x,i,mat,n)){
-                mat[x][i]='Q';
-                fun(x+1,n,mat);
-                mat[x][i]='.';
+            if(valid(x,i,n,v)){
+                v[x][i]='Q';
+                fun(x+1,n,v);
+                v[x][i]='.';
             }
         }
     }
     vector<vector<string>> solveNQueens(int n) {
-        ans.clear();
-        string s="";
+        vector<string>v;
         for(int i=0;i<n;i++){
-            s.push_back('.');
+            string s="";
+            for(int j=0;j<n;j++){
+                s.push_back('.');
+            }
+            v.push_back(s);
         }
-        vector<string>mat(n,s);
-        fun(0,n,mat);
+        fun(0,n,v);
         return ans;
     }
 };
