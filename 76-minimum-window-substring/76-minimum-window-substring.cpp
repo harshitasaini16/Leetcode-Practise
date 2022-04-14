@@ -19,7 +19,7 @@ public:
                 }
             }
             while(j<=i && count==0){
-                 if(mx>i-j+1){
+                if(mx>i-j+1){
                     mx=i-j+1;
                     ans=s.substr(j,i-j+1);
                 }
