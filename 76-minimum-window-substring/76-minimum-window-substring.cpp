@@ -5,12 +5,12 @@ public:
         for(int i=0;i<t.length();i++){
             m[t[i]]++;
         }
-        int n=s.length();
         int count=m.size();
+        string ans="";
+        int mx=INT_MAX;
         int i=0;
         int j=0;
-        int start=0;
-        int mx=INT_MAX;
+        int n=s.length();
         while(i<n){
             if(m.find(s[i])!=m.end()){
                 m[s[i]]--;
@@ -18,14 +18,14 @@ public:
                     count--;
                 }
             }
-            while(count==0){
-                if(mx>i-j+1){
+            while(j<=i && count==0){
+                 if(mx>i-j+1){
                     mx=i-j+1;
-                    start=j;
+                    ans=s.substr(j,i-j+1);
                 }
                 if(m.find(s[j])!=m.end()){
                     m[s[j]]++;
-                    if(m[s[j]]>0){
+                    if(m[s[j]]==1){
                         count++;
                     }
                 }
@@ -33,9 +33,6 @@ public:
             }
             i++;
         }
-    if(mx==INT_MAX){
-        return "";
-    }
-        return s.substr(start,mx);
+        return ans;
     }
 };
