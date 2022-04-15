@@ -2,34 +2,46 @@ class Solution {
 public:
     string minWindow(string s, string t) {
         map<char,int>m;
-        for(int i=0;i<t.length();i++){
-            m[t[i]]++;
+        for(auto x:t){
+            m[x]++;
         }
+        int ind=-1;
+        int ans=INT_MAX;
         int j=0;
-        int count=m.size();
-        int mx=INT_MAX;
-        string ans="";
-        for(int i=0;i<s.length();i++){
+        int c=m.size();
+        int i=0,n=s.length();
+        while(i<n){
             if(m.find(s[i])!=m.end()){
                 m[s[i]]--;
                 if(m[s[i]]==0){
-                    count--;
+                    c--;
                 }
             }
-            while(count==0){
-                if(i-j+1<mx){
-                    mx=i-j+1;
-                    ans=s.substr(j,i-j+1);
+            if(c==0){
+                if(ans>i-j+1){
+                    ans=i-j+1;
+                    ind=j;
+                }
+            }
+            while(c==0){
+                if(ans>i-j+1){
+                    ans=i-j+1;
+                    ind=j;
                 }
                 if(m.find(s[j])!=m.end()){
                     m[s[j]]++;
-                    if(m[s[j]]==1){
-                        count++;
+                    if(m[s[j]]>0){
+                        c++;
                     }
                 }
                 j++;
             }
+            i++;
         }
-        return ans;
+        if(ind==-1){
+            return "";
+        }
+        return s.substr(ind,ans);
+        
     }
 };
