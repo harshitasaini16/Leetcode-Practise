@@ -1,26 +1,26 @@
 class Solution {
 public:
     int dp[100001][3][3];
-    int fun(int x,vector<int>& prices,int cap,int v){
+    int fun(int x,vector<int>& prices,int l,int c){
         if(x==prices.size()){
             return 0;
         }
-        if(cap==0){
+        if(c==2){
             return 0;
         }
-        if(dp[x][cap][v]!=-1){
-            return dp[x][cap][v];
+        if(dp[x][l][c]!=-1){
+            return dp[x][l][c];
         }
-        if(v==0){
-            return dp[x][cap][v]=max(-prices[x]+fun(x+1,prices,cap,1),fun(x+1,prices,cap,0));
+        if(l==1){
+            return dp[x][l][c]=max(fun(x+1,prices,l,c),-prices[x]+fun(x+1,prices,2,c));
         }
-        else{
-            return dp[x][cap][v]=max(prices[x]+fun(x+1,prices,cap-1,0),fun(x+1,prices,cap,1));
+        else if(l==2){
+            return dp[x][l][c]=max(fun(x+1,prices,l,c),prices[x]+fun(x+1,prices,1,c+1));
         }
+        return 0;
     }
     int maxProfit(vector<int>& prices) {
-        int n=prices.size();
         memset(dp,-1,sizeof(dp));
-        return fun(0,prices,2,0);
+        return fun(0,prices,1,0);
     }
 };
