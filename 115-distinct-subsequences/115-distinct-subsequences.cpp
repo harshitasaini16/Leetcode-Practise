@@ -1,33 +1,25 @@
 class Solution {
 public:
+    int dp[1001][1001];
+    int fun(string s,string t,int n,int m){
+        if(m==0){
+            return 1;
+        }
+        if(dp[n][m]!=-1){
+            return dp[n][m];
+        }
+        if(n==0 || m==0){
+            return 0;
+        }
+        if(s[n-1]==t[m-1]){
+            return dp[n][m]=(fun(s,t,n-1,m-1)+fun(s,t,n-1,m));
+        }
+        return dp[n][m]=fun(s,t,n-1,m);
+    }
     int numDistinct(string s, string t) {
-        int mod=1e9+7;
+        memset(dp,-1,sizeof(dp));
         int n=s.length();
         int m=t.length();
-        int mat[n+1][m+1];
-        for(int i=0;i<=n;i++){
-            for(int j=0;j<=m;j++){
-                if(i==0 && j==0){
-                    mat[i][j]=1;
-                }
-                else if(i==0){
-                    mat[i][j]=0;
-                }
-                else if(j==0){
-                    mat[i][j]=1;
-                }
-            }
-        }
-        for(int i=1;i<=n;i++){
-            for(int j=1;j<=m;j++){
-                if(s[i-1]==t[j-1]){
-                    mat[i][j]=(mat[i-1][j-1]+mat[i-1][j])%mod;
-                }
-                else{
-                    mat[i][j]=mat[i-1][j];
-                }
-            }
-        }
-        return mat[n][m];
+        return fun(s,t,n,m);
     }
 };
