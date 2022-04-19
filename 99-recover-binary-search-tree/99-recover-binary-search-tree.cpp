@@ -28,9 +28,6 @@ public:
         fun(root->right);
     }
     void recoverTree(TreeNode* root) {
-        if(root==NULL){
-            return;
-        }
         fun(root);
         swap(a->val,b->val);
     }
