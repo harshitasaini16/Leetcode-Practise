@@ -11,28 +11,24 @@
  */
 class Solution {
 public:
-    vector<int>v;
-    void fun(TreeNode *n){
-        if(n==NULL){
+    TreeNode *a,*b;
+    TreeNode *c=new TreeNode(INT_MIN);
+    void fun(TreeNode *root){
+        if(root==NULL){
             return;
         }
-        fun(n->left);
-        v.push_back(n->val);
-        fun(n->right);
-    }
-    int x=0;
-    void f(TreeNode *n){
-        if(n==NULL){
-            return;
+        fun(root->left);
+        if(a==NULL && c->val>root->val){
+            a=c;
         }
-        f(n->left);
-        n->val=v[x];
-        x++;
-        f(n->right);
+        if(a!=NULL && c->val>root->val){
+            b=root;
+        }
+        c=root;
+        fun(root->right);
     }
     void recoverTree(TreeNode* root) {
         fun(root);
-        sort(v.begin(),v.end());
-        f(root);
+        swap(a->val,b->val);
     }
 };
