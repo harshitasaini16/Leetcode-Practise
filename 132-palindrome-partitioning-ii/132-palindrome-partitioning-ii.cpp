@@ -2,9 +2,6 @@ class Solution {
 public:
     int dp[2001][2001];
     bool check(int i,int j,string &s){
-        if(dp[i][j]!=-1){
-            return 0;
-        }
         while(i<j){
             if(s[i]!=s[j]){
                 return false;
