@@ -1,25 +1,25 @@
 class MyHashSet {
 public:
-    map<int,int>m;
+    vector<int>v;
     MyHashSet() {
-        m.clear();
+      for(int i=0;i<=1000001;i++){
+          v.push_back(-1);
+      }
     }
     
     void add(int key) {
-       m[key]=1;
+       v[key]=1;
     }
     
     void remove(int key) {
-       if(m.find(key)!=m.end()){
-            m.erase(key);
-        }
+       v[key]=-1;
     }
     
     bool contains(int key) {
-        if(m.find(key)!=m.end()){
-            return true;
+        if(v[key]==-1){
+            return false;
         }
-        return false;
+        return true;
     }
 };
 
