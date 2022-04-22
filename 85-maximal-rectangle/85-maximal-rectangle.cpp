@@ -1,8 +1,7 @@
 class Solution {
 public:
-    int fun(vector<int>&dp,int n){
-        vector<int>left(n,0);
-        vector<int>right(n,0);
+    int fun(vector<int>dp,int n){
+        int left[n],right[n];
         stack<int>s;
         for(int i=0;i<n;i++){
             while(!s.empty() && dp[s.top()]>=dp[i]){
@@ -47,7 +46,7 @@ public:
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 if(mat[i][j]=='1'){
-                    dp[j]+=1;
+                    dp[j]++;
                 }
                 else{
                     dp[j]=0;
