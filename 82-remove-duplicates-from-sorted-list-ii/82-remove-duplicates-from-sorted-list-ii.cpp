@@ -14,18 +14,18 @@ public:
         if(head==NULL || head->next==NULL){
             return head;
         }
-        ListNode *h1=head;
-        ListNode *h2=head->next;
-        int c=h1->val;
-        if(h2->val!=c){
-            h1->next=deleteDuplicates(h2);
-            return h1;
-        }
-        else{
-            while(h1!=NULL && h1->val==c){
-                h1=h1->next;
+        ListNode *h=head;
+        if(head->val==head->next->val){
+            ListNode *h=head;
+            while(h!=NULL && h->val==head->val){
+                h=h->next;
             }
-            return deleteDuplicates(h1);
+            if(h==NULL){
+               return NULL;
+            }
+            return deleteDuplicates(h);
         }
+        h->next=deleteDuplicates(h->next);
+        return h;
     }
 };
