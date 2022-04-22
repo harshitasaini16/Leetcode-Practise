@@ -1,34 +1,37 @@
 class Solution {
 public:
-    bool static cmp(vector<int>&v1,vector<int>&v2){
-        if(v1[0]<v2[0]){
+    bool cmp(vector<int>v1,vector<int>v2){
+        if(v1[0]==v2[0]){
             return true;
         }
         if(v1[0]==v2[0]){
-            return v1[1]<v2[1];
+            if(v1[1]<v2[1]){
+                return true;
+            }
         }
         return false;
     }
-    vector<vector<int>> getSkyline(vector<vector<int>>&arr) {
-        vector<vector<int>>v;
-        for(auto x:arr){
-            v.push_back({x[0],-x[2]});
-            v.push_back({x[1],x[2]});
+    vector<vector<int>> getSkyline(vector<vector<int>>& b) {
+        vector<pair<int,int>>v;
+        for(int i=0;i<b.size();i++){
+            v.push_back({b[i][0],-b[i][2]});
+            v.push_back({b[i][1],b[i][2]});
         }
+        sort(v.begin(),v.end());
+        multiset<int>s;
+        s.insert(0);
         vector<vector<int>>ans;
-        sort(v.begin(),v.end(),cmp);
-         multiset<int> ss = {0};                
-        int top = 0;                                        
-        for (auto w : v) {
-            if (w[1] < 0) {                             
-               ss.insert(-w[1]);
-            } else {                                        
-                ss.erase(ss.find(w[1]));
+        int mx=0;
+        for(int i=0;i<v.size();i++){
+            if(v[i].second<0){
+                s.insert(abs(v[i].second));
             }
-            if (*ss.rbegin() != top) {      
-                top = *ss.rbegin();
-                ans.push_back({w[0],*ss.rbegin()});
-                
+            else{
+                s.erase(s.find(v[i].second));
+            }
+            if(mx!=*s.rbegin()){
+                mx=*s.rbegin();
+                ans.push_back({v[i].first,mx});
             }
         }
         return ans;
