@@ -1,50 +1,47 @@
 class Solution {
 public:
     string simplifyPath(string path) {
-        int n=path.length();
-        if(path[n-1]!='/'){
-            path+='/';
-            n++;
-        }
         stack<string>s;
-        string temp="";
-        int i=1;
-        while(i<n){
+        string g="";
+        if(path[path.length()-1]!='/'){
+            path+='/';
+        }
+        for(int i=1;i<path.length();i++){
             if(path[i]=='/'){
-                if(temp=="" || temp=="."){
+                if(g==".."){
+                    if(!s.empty()){
+                        s.pop();
+                    }
+                    g="";
+                }
+                else if(g=="."){
                     
                 }
-                else if(temp==".."){
-                    if(s.empty()){
-                        
-                    }
-                    else{
-                      s.pop();   
-                    }
+                else if(g==""){
+                    
                 }
                 else{
-                    s.push(temp);
+                    s.push(g);
                 }
-                temp="";
+                 g="";
             }
             else{
-                temp+=path[i];
+                g+=path[i];
             }
-            i++;
         }
-        stack<string>st;
         string ans="";
+        stack<string>r;
         while(!s.empty()){
-            st.push(s.top());
+            r.push(s.top());
             s.pop();
         }
-        while(!st.empty()){
+        while(!r.empty()){
             ans+='/';
-            ans+=st.top();
-            st.pop();
+            ans+=r.top();
+            r.pop();
         }
-        if(ans.length()==0){
-            ans+='/';
+        if(ans==""){
+            return "/";
         }
         return ans;
     }
