@@ -1,36 +1,30 @@
 class Solution {
 public:
-    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+    vector<vector<int>> merge(vector<vector<int>>& intervals){
         sort(intervals.begin(),intervals.end());
-        int n=intervals.size();
         vector<vector<int>>ans;
-        vector<int>v;
-        int x;
-        for(int i=0;i<n;i++){
-            if(v.size()==0){
-                v.push_back(intervals[i][0]);
-                x=intervals[i][1];
+        int s=-1,e;
+        for(int i=0;i<intervals.size();i++){
+            if(s==-1){
+                s=intervals[i][0];
+                e=intervals[i][1];
             }
             else{
-                if(intervals[i][0]<=x){
-                    x=max(x,intervals[i][1]);
+                if(intervals[i][0]<=e){
+                    e=max(e,intervals[i][1]);
                 }
                 else{
-                    v.push_back(x);
-                    ans.push_back(v);
-                    v.clear();
-                    v.push_back(intervals[i][0]);
-                    x=intervals[i][1];
+                    ans.push_back({s,e});
+                    s=intervals[i][0];
+                    e=intervals[i][1];
                 }
             }
         }
-        v.push_back(x);
-        ans.push_back(v);
+        ans.push_back({s,e});
         return ans;
     }
-    vector<vector<int>> insert(vector<vector<int>>& in, vector<int>& ne) {
-        in.push_back(ne);
-        sort(in.begin(),in.end());
-        return merge(in);
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>&ni) {
+        intervals.push_back(ni);
+        return merge(intervals);
     }
 };
