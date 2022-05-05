@@ -1,8 +1,13 @@
 class MyStack {
 public:
-    queue<int>q1;
+    queue<int>q1,q2;
     MyStack() {
-        
+        while(!q1.empty()){
+            q1.pop();
+        }
+        while(!q2.empty()){
+            q2.pop();
+        }
     }
     
     void push(int x) {
@@ -13,31 +18,35 @@ public:
         if(q1.empty()){
             return -1;
         }
-        int x=q1.size();
-        while(x>1){
-            q1.push(q1.front());
+        while(q1.size()>1){
+            q2.push(q1.front());
             q1.pop();
-            x--;
         }
-        int y=q1.front();
+        int x=q1.front();
         q1.pop();
-        return y;
+        while(!q2.empty()){
+            q1.push(q2.front());
+            q2.pop();
+        }
+        return x;
     }
     
     int top() {
         if(q1.empty()){
             return -1;
         }
-        int x=q1.size();
-        while(x>1){
-            q1.push(q1.front());
+        while(q1.size()>1){
+            q2.push(q1.front());
             q1.pop();
-            x--;
         }
-        int y=q1.front();
+        int x=q1.front();
+        q2.push(x);
         q1.pop();
-        q1.push(y);
-        return y;
+        while(!q2.empty()){
+            q1.push(q2.front());
+            q2.pop();
+        }
+        return x;
     }
     
     bool empty() {
@@ -47,6 +56,7 @@ public:
         return false;
     }
 };
+
 /**
  * Your MyStack object will be instantiated and called as such:
  * MyStack* obj = new MyStack();
