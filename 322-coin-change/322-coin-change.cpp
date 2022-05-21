@@ -1,28 +1,26 @@
 class Solution {
 public:
     int dp[10001][13];
-    int f(int n,int amount,vector<int>& coins){
+    int fun(int amount,vector<int>& coins,int x){
         if(amount==0){
             return 0;
         }
-        if(n==0){
+        if(x==0){
             return INT_MAX-1;
         }
-        if(dp[amount][n]!=-1){
-            return dp[amount][n];
+        if(dp[amount][x]!=-1){
+            return dp[amount][x];
         }
-        if(coins[n-1]<=amount){
-            return dp[amount][n]=min(1+f(n,amount-coins[n-1],coins),f(n-1,amount,coins));
+        if(coins[x-1]>amount){
+            return dp[amount][x]=fun(amount,coins,x-1);
         }
-        else{
-            return dp[amount][n]=f(n-1,amount,coins);
-        }
+        return dp[amount][x]=min(1+fun(amount-coins[x-1],coins,x),fun(amount,coins,x-1));
     }
     int coinChange(vector<int>& coins, int amount) {
-        sort(coins.begin(),coins.end());
         memset(dp,-1,sizeof(dp));
-        int x=f(coins.size(),amount,coins);
-        if(x==INT_MAX-1 || x==INT_MAX){
+        sort(coins.begin(),coins.end());
+        int x=fun(amount,coins,coins.size());
+        if(x>=INT_MAX-1){
             return -1;
         }
         return x;
