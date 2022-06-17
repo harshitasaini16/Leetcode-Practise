@@ -11,18 +11,18 @@
  */
 class Solution {
 public:
-    int cam=0;
-    int fun(TreeNode *root){
+    int ans=0;
+    int fun(TreeNode* root){
         if(root==NULL){
             return 2;
         }
-        int ls=fun(root->left);
-        int rs=fun(root->right);
-        if(ls==0 || rs==0){
-            cam+=1;
+        int l=fun(root->left);
+        int r=fun(root->right);
+        if(l==0 || r==0){
+            ans++;
             return 1;
         }
-        if(ls==1 || rs==1){
+        if(l==1 || r==1){
             return 2;
         }
         return 0;
@@ -31,10 +31,10 @@ public:
         if(root==NULL){
             return 0;
         }
-        int ans=fun(root);
-        if(ans==0){
-            return cam+1;
+        int x=fun(root);
+        if(x==0){
+            return ans+1;
         }
-        return cam;
+        return ans;
     }
 };
