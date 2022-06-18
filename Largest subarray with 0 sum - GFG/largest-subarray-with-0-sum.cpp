@@ -13,19 +13,19 @@ class Solution{
     int maxLen(vector<int>&A, int n)
     {   
         // Your code here
-        int  s=0;
         int ans=0;
-        unordered_map<int,int>m;
-        for(int i=0;i<A.size();i++){
+        map<int,int>m;
+        int s=0;
+        for(int i=0;i<n;i++){
             s+=A[i];
             if(s==0){
                 ans=max(ans,i+1);
             }
-            if(m.find(s)==m.end()){
-                m[s]=i;
+            if(m.find(s)!=m.end()){
+                ans=max(ans,i-m[s]);
             }
             else{
-                ans=max(ans,i-m[s]);
+                m[s]=i;
             }
         }
         return ans;
