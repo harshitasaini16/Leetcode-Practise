@@ -1,21 +1,27 @@
 class Solution {
 public:
-    double fun(double x,int y){
-        if(y==0){
+    double fun(double x,int n){
+        if(n==0){
             return 1;
         }
-        double z=fun(x,y/2);
-        if(y%2==0){
-            return z*z;
+        double s=fun(x,n/2);
+        if(n%2==0){
+            return (double)s*s;
         }
         else{
-            return z*z*x;
+            return (double)s*s*x;
         }
     }
     double myPow(double x, int n) {
+        bool f=true;
         if(n<0){
-            return 1/fun(x,abs(n));
+            f=false;
         }
-        return fun(x,n);
+        double s=fun(x,abs(n));
+        if(f==false){
+            double ans=(double)1/(double)s;
+            return ans;
+        }
+        return s;
     }
 };
