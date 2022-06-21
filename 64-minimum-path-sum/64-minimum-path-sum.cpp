@@ -1,22 +1,23 @@
 class Solution {
 public:
-    map<pair<int,int>,int>dp;
-    int f(int i,int j,int n,int m,vector<vector<int>>& grid){
-        if(i>=n || j>=m){
-            return INT_MAX;
+    int dp[201][201];
+    int fun(vector<vector<int>>& grid,int n,int m){
+        if(n==1 && m==1){
+            return grid[n-1][m-1];
         }
-        if(i==n-1 && j==m-1){
-            return grid[i][j];
+        if(n==1){
+            return dp[n][m]=grid[n-1][m-1]+fun(grid,n,m-1);
         }
-        if(dp.find({i,j})!=dp.end()){
-            return dp[{i,j}];
+        if(m==1){
+            return dp[n][m]=grid[n-1][m-1]+fun(grid,n-1,m);
         }
-        return dp[{i,j}]=grid[i][j]+min(f(i+1,j,n,m,grid),f(i,j+1,n,m,grid));
+        if(dp[n][m]!=-1){
+            return dp[n][m];
+        }
+        return dp[n][m]=grid[n-1][m-1]+min(fun(grid,n-1,m),fun(grid,n,m-1));
     }
     int minPathSum(vector<vector<int>>& grid) {
-        int n=grid.size();
-        int m=grid[0].size();
-        dp.clear();
-        return f(0,0,n,m,grid);
+        memset(dp,-1,sizeof(dp));
+        return fun(grid,grid.size(),grid[0].size());
     }
 };
