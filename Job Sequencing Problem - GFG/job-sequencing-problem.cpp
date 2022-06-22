@@ -53,7 +53,7 @@ class Solution
             }
         }
         return {x,s};
-    } 
+    }
 };
 
 // { Driver Code Starts.
