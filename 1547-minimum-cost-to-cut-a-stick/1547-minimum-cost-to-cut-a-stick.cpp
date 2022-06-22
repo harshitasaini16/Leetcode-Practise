@@ -1,20 +1,26 @@
 class Solution {
 public:
-    int dp[101][101];
-    int solve(vector<int>& cuts, int l, int r, int ci, int cj){
-        if(ci>cj) return 0;
-        if(dp[ci][cj]!=-1) return dp[ci][cj];
-        int cost = 1e7;
-        for(int k=ci; k<=cj; ++k){
-            cost = min(cost, solve(cuts,l,cuts[k],ci,k-1)+solve(cuts,cuts[k],r,k+1,cj));
+    map<pair<pair<int,int>,pair<int,int>>,int>dp;
+    int fun(vector<int>& cuts,int l,int r,int x,int size){
+        if(l>r){
+            return 0;
         }
-        return dp[ci][cj] = cost+r-l;
+        if(l==r){
+            return (size-x);
+        }
+        if(dp.find({{l,r},{x,size}})!=dp.end()){
+            return dp[{{l,r},{x,size}}];
+        }
+        int ans=INT_MAX;
+        for(int i=l;i<=r;i++){
+            int s=fun(cuts,l,i-1,x,cuts[i])+fun(cuts,i+1,r,cuts[i],size);
+            ans=min(ans,s);
+        }
+        return dp[{{l,r},{x,size}}]=ans+(size-x);
     }
-    
     int minCost(int n, vector<int>& cuts) {
-        memset(dp,-1,sizeof(dp));
+        dp.clear();
         sort(cuts.begin(),cuts.end());
-        int ci=0, cj=cuts.size()-1;
-        return solve(cuts,0,n,ci,cj);
+        return fun(cuts,0,cuts.size()-1,0,n);
     }
 };
