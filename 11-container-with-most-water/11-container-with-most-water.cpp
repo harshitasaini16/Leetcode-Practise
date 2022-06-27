@@ -1,28 +1,23 @@
 class Solution {
 public:
-    int maxArea(vector<int>& height) {
-        int n=height.size();
-        int i=0;
-        int lmx=height[0];
-        int rmx=height[n-1];
-        int j=n-1;
+    int maxArea(vector<int>& h) {
+        int l=0;
         int ans=0;
-        while(i<j){
-            int s=(j-i)*min(lmx,rmx);
-            cout<<s<<' ';
+        int r=h.size()-1;
+        while(l<r){
+            int s=min(h[l],h[r])*(r-l);
             ans=max(ans,s);
-            if(lmx<=rmx){
-                while(i<j && height[i]<=lmx){
-                    i++;
+            if(h[l]<=h[r]){
+                int x=h[l];
+                while(l<r && h[l]==x){
+                    l++;
                 }
-                lmx=height[i];
             }
             else{
-                int x=height[j];
-                while(i<j && height[j]<=rmx){
-                    j--;
+                int y=h[r];
+                while(l<r && h[r]==y){
+                    r--;
                 }
-                rmx=height[j];
             }
         }
         return ans;
