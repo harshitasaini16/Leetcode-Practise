@@ -1,16 +1,22 @@
 class Solution {
 public:
-    bool fun(int x,int y,vector<vector<char>>&board,string word,int d){
-        if(d>=word.length()){
+    int dx[4]={-1,0,0,1};
+    int dy[4]={0,1,-1,0};
+    bool fun(int x,int y,vector<vector<char>>&board,string s,int k){
+        if(k>=s.length()){
             return true;
         }
-        if(x<0 || y<0 || x>=board.size() || y>=board[0].size() || word[d]!=board[x][y]){
+        if(x<0 || y<0 || x>=board.size() || y>=board[0].size() || board[x][y]!=s[k]){
             return false;
         }
         char c=board[x][y];
-        board[x][y]='.';
-        if ((fun(x+1,y,board,word,d+1) || fun(x-1,y,board,word,d+1) || fun(x,y+1,board,word,d+1) || fun(x,y-1,board,word,d+1))){
-            return true;
+        if(board[x][y]==s[k]){
+            board[x][y]='.';
+            for(int i=0;i<4;i++){
+                if(fun(x+dx[i],y+dy[i],board,s,k+1)){
+                    return true;
+                }
+            }
         }
         board[x][y]=c;
         return false;
@@ -18,17 +24,13 @@ public:
     bool exist(vector<vector<char>>& board, string word) {
         int n=board.size();
         int m=board[0].size();
-        vector<pair<int,int>>v;
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 if(board[i][j]==word[0]){
-                    v.push_back({i,j});
+                    if(fun(i,j,board,word,0)){
+                        return true;
+                    }
                 }
-            }
-        }
-        for(int i=0;i<v.size();i++){
-            if(fun(v[i].first,v[i].second,board,word,0)){
-                return true;
             }
         }
         return false;
