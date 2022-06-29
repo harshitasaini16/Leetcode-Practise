@@ -1,18 +1,18 @@
 class Solution {
 public:
-    int maxScore(vector<int>&v, int k) {
+    int maxScore(vector<int>& c, int k) {
         int s=0;
         for(int i=0;i<k;i++){
-            s+=v[i];
+            s+=c[i];
         }
         int ans=s;
-        int i=k-1;
-        int j=v.size()-1;
+        int x=k-1;
+        int y=c.size()-1;
         while(k--){
-            s+=v[j];
-            s-=v[i];
-            i--;
-            j--;
+            s-=c[x];
+            s+=c[y];
+            x--;
+            y--;
             ans=max(ans,s);
         }
         return ans;
