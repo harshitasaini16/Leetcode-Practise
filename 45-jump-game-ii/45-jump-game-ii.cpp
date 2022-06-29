@@ -1,17 +1,26 @@
 class Solution {
 public:
     int jump(vector<int>& nums) {
-        int x=1;
         int n=nums.size();
-        vector<int>ans(n,INT_MAX);
-        ans[0]=0;
+        int ans=1;
+        int mx=nums[0];
+        if(n==1){
+            return 0;
+        }
+        int s=nums[0];
         for(int i=1;i<n;i++){
-            for(int j=0;j<i;j++){
-                if(j+nums[j]>=i){
-                    ans[i]=min(ans[i],ans[j]+1);
-                }
+            if(mx>=n-1){
+                return ans;
+            }
+            if(i<=mx){
+                s=max(s,i+nums[i]);
+            }
+            else{
+                ans++;
+                mx=s;
+                s=max(s,i+nums[i]);
             }
         }
-        return ans[n-1];
+        return ans;
     }
 };
