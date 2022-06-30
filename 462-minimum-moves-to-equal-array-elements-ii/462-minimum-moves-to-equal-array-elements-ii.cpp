@@ -1,17 +1,18 @@
 class Solution {
 public:
+    int fun(vector<int>& nums,int x){
+        int s=0;
+        for(int i=0;i<nums.size();i++){
+            s+=abs(nums[i]-x);
+        }
+        return s;
+    }
     int minMoves2(vector<int>& nums) {
-        int sum=0;
         sort(nums.begin(),nums.end());
         int n=nums.size();
-        for(int i=0;i<nums.size();i++){
-            sum+=nums[i];
+        if(n%2!=0){
+            return fun(nums,nums[n/2]);
         }
-        int s1=0;
-        int av=nums[nums.size()/2];
-        for(int i=0;i<nums.size();i++){
-            s1+=abs(av-nums[i]);
-        }
-        return s1;
+        return min(fun(nums,nums[n/2-1]),fun(nums,nums[n/2]));
     }
 };
