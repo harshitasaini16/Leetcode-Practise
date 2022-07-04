@@ -1,20 +1,20 @@
 class Solution {
 public:
-    map<int,int>m;
-    int f(int n){
-        if(n==0){
-            return 1;
-        }
+    int dp[50];
+    int fun(int n){
         if(n<0){
             return 0;
         }
-        if(m.find(n)!=m.end()){
-            return m[n];
+        if(dp[n]!=-1){
+            return dp[n];
         }
-        return m[n]=f(n-1)+f(n-2);
+        if(n==0){
+            return dp[n]=1;
+        }
+        return dp[n]=fun(n-1)+fun(n-2);
     }
     int climbStairs(int n) {
-        m.clear();
-        return f(n);
+        memset(dp,-1,sizeof(dp));
+        return fun(n);
     }
 };
