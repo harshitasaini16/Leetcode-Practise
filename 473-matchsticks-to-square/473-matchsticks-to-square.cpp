@@ -1,34 +1,37 @@
 class Solution {
 public:
-    bool makesquare(vector<int>& M) {
-        sort(M.begin(), M.end(), greater<int>());
-        int total = accumulate(M.begin(), M.end(), 0);
-        side = total / 4;
-        if ((float)total / 4 > side || M[0] > side)
-            return false;
-        return btrack(0, side, 0, M);
-    }
-private:
-    int side;
-    bool btrack(int i, int space, int done, vector<int>& M) {
-        if (done == 3)
+    bool fun(vector<int>&arr,int i,int fin,int sum,int rem,vector<bool>&vis){
+        if(rem==1){
             return true;
-        for (; i < M.size(); i++) {
-            int num = M[i];
-            bool res;
-            if (num > space)
+        }
+        if(i>=arr.size()){
+            return false;
+        }
+        if(sum==fin){
+            return fun(arr,0,fin,0,rem-1,vis);
+        }
+        for(int j=i;j<arr.size();j++){
+            if(vis[j]==true or sum+arr[j]>fin){
                 continue;
-            M[i] = side + 1;
-            if (num == space)
-                res = btrack(1, side, done+1, M);
-            else
-                res = btrack(i+1, space-num, done, M);
-            if (res)
+            }
+            vis[j]=true;
+            if(fun(arr,j+1,fin,sum+arr[j],rem,vis)==true){
                 return true;
-            M[i] = num;
-            while (i < M.size() and M[i+1] == num)
-                i++;
+            }
+            vis[j]=false;
         }
         return false;
+    }
+    bool makesquare(vector<int>& arr) {
+        int n=arr.size();
+        int sum=0;
+        for(auto x:arr){
+            sum+=x;
+        }
+        if(sum%4!=0  or n<4){
+            return false;
+        }
+        vector<bool>vis(n,false);
+        return fun(arr,0,sum/4,0,4,vis);
     }
 };
