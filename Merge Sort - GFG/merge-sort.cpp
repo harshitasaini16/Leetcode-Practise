@@ -18,30 +18,35 @@ void printArray(int arr[], int size)
  // } Driver Code Ends
 class Solution
 {
+    int temp[100001];
     void merge(int arr[], int l, int m, int r)
     {
          // Your code here
          int i=l,j=m+1,k=l;
-         vector<int>v;
+         
          while(i<=m and j<=r){
              if(arr[i]<=arr[j]){
-                 v.push_back(arr[i]);
+                 temp[k]=arr[i];
                  i++;
+                 k++;
              }else{
-                 v.push_back(arr[j]);
+                 temp[k]=arr[j];
                  j++;
+                 k++;
              }
          }
          while(i<=m){
-            v.push_back(arr[i]);
-            i++;
+             temp[k]=arr[i];
+             i++;
+             k++;
          }
          while(j<=r){
-            v.push_back(arr[j]);
-            j++;
+             temp[k]=arr[j];
+             j++;
+             k++;
          }
-         for(i=0;i<v.size();i++){
-             arr[i+k]=v[i];
+         for(i=l;i<=r;i++){
+             arr[i]=temp[i];
          }
     }
     public:
