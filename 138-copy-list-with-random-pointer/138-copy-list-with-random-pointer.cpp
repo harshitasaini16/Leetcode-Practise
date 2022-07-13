@@ -22,10 +22,10 @@ public:
         }
         Node *temp=head;
         while(temp!=NULL){
-            Node *node=new Node(temp->val);
-            node->next=temp->next;
-            temp->next=node;
-            temp=node->next;
+            Node *n=new Node(temp->val);
+            n->next=temp->next;
+            temp->next=n;
+            temp=temp->next->next;
         }
         temp=head;
         while(temp!=NULL){
