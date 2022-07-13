@@ -11,25 +11,17 @@
  */
 class Solution {
 public:
-    map<pair<TreeNode*,bool>,int>m;
-    int fun(TreeNode *root,bool f){
+    int fun(TreeNode *root,int &l,int &r){
         if(root==NULL){
             return 0;
         }
-        if(m.find({root,f})!=m.end()){
-            return m[{root,f}];
-        }
-        if(f==true){
-            int s1=root->val+fun(root->left,false)+fun(root->right,false);
-            int s2=fun(root->left,true)+fun(root->right,true);
-            return m[{root,f}]=max(s1,s2);
-        }
-        int s1=fun(root->left,true);
-        int s2=fun(root->right,true);
-        return m[{root,f}]=s1+s2;
+        int ll=0,lr=0,rl=0,rr=0;
+        l=fun(root->left,ll,lr);
+        r=fun(root->right,rl,rr);
+        return max(root->val+ll+lr+rr+rl,l+r);
     }
     int rob(TreeNode* root) {
-        m.clear();
-        return fun(root,true);
+        int l=0,r=0;
+        return fun(root,l,r);
     }
 };
