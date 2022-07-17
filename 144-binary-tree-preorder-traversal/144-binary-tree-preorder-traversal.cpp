@@ -16,17 +16,17 @@ public:
             return {};
         }
         vector<int>ans;
-        stack<TreeNode*>q;
-        q.push(root);
-        while(!q.empty()){
-            auto x=q.top();
-            q.pop();
-            ans.push_back(x->val);
-            if(x->right!=NULL){
-                q.push(x->right);
+        stack<TreeNode*>s;
+        s.push(root);
+        while(!s.empty()){
+            TreeNode *n=s.top();
+            ans.push_back(n->val);
+            s.pop();
+            if(n->right!=NULL){
+                s.push(n->right);
             }
-            if(x->left!=NULL){
-                q.push(x->left);
+            if(n->left!=NULL){
+                s.push(n->left);
             }
         }
         return ans;
