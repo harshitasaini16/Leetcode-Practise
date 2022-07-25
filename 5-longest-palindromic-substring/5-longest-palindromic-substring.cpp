@@ -12,7 +12,6 @@ public:
                 r++;
             }
             string sc=s.substr(l+1,r-l-1);
-            cout<<sc<<' ';
             if(sc.length()>ans){
                 ans=sc.length();
                 st=sc;
@@ -24,7 +23,6 @@ public:
                 r++;
             }
             sc=s.substr(l+1,r-l-1);
-            cout<<sc<<' ';
             if(sc.length()>ans){
                 ans=sc.length();
                 st=sc;
