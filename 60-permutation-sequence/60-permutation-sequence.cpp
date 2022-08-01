@@ -1,19 +1,19 @@
 class Solution {
 public:
     string getPermutation(int n, int k) {
-        int s=1;
         vector<int>v;
-        for(int i=1;i<n;i++){
-            s*=i;
+        int s=1;
+        for(int i=1;i<=n-1;i++){
             v.push_back(i);
+            s*=i;
         }
         string ans="";
-        k--;
         v.push_back(n);
+        k--;
         while(true){
-            int y=k/s;
-            ans+=to_string(v[y]);
-            v.erase(v.begin()+y);
+            int x=k/s;
+            ans=ans+to_string(v[x]);
+            v.erase(v.begin()+x);
             if(v.size()==0){
                 break;
             }
