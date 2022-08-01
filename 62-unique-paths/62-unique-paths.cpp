@@ -1,23 +1,23 @@
 class Solution {
 public:
-    map<pair<int,int>,int>dp;
-    int fun(int i,int j,int n,int m){
-        if(i==n-1 && j==m-1){
+    int dp[101][101];
+    int fun(int n,int m){
+        if(n==1 && m==1){
             return 1;
         }
-        if(dp.find({i,j})!=dp.end()){
-            return dp[{i,j}];
+        if(n==1){
+            return fun(n,m-1);
         }
-        if(i==n-1){
-            return dp[{i,j}]=fun(i,j+1,n,m);
+        else if(m==1){
+            return fun(n-1,m);
         }
-        if(j==m-1){
-            return dp[{i,j}]=fun(i+1,j,n,m);
+        if(dp[n][m]!=-1){
+            return dp[n][m];
         }
-        return dp[{i,j}]=fun(i+1,j,n,m)+fun(i,j+1,n,m);
+        return dp[n][m]=fun(n-1,m)+fun(n,m-1);
     }
-    int uniquePaths(int n, int m) {
-        dp.clear();
-        return fun(0,0,n,m);
+    int uniquePaths(int m, int n) {
+        memset(dp,-1,sizeof(dp));
+        return fun(m,n);
     }
 };
