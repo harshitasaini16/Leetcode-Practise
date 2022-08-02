@@ -17,15 +17,15 @@ public:
         }
         if(root->left!=NULL){
             flatten(root->left);
-            TreeNode *n=root->left;
-            TreeNode *f=root->right;
-            TreeNode *g=n;
-            while(g->right!=NULL){
-                g=g->right;
-            }
-            root->right=n;
-            g->right=f;
+            TreeNode *l=root->left;
+            TreeNode *r=root->right;
             root->left=NULL;
+            root->right=l;
+            TreeNode *q=l;
+            while(q->right!=NULL){
+                q=q->right;
+            }
+            q->right=r;
         }
         flatten(root->right);
     }
