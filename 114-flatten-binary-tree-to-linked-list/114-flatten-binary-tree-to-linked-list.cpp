@@ -27,6 +27,8 @@ public:
             }
             q->right=r;
         }
-        flatten(root->right);
+        if(root->right!=NULL){
+            flatten(root->right);
+        }
     }
 };
