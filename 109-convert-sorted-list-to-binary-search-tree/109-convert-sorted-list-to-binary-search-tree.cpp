@@ -31,18 +31,18 @@ public:
         }
         ListNode *slow=head;
         ListNode *fast=head;
-        while(fast!=NULL && fast->next!=NULL){
+        while(slow!=NULL & fast!=NULL && fast->next!=NULL){
             slow=slow->next;
             fast=fast->next->next;
         }
-        ListNode *h=head;
-        while(h->next!=slow){
-            h=h->next;
+        ListNode *r=head;
+        while(r!=NULL && r->next!=slow){
+            r=r->next;
         }
-        h->next=NULL;
-        TreeNode *n=new TreeNode(slow->val);
-        n->left=sortedListToBST(head);
-        n->right=sortedListToBST(slow->next);
-        return n;
+        r->next=NULL;
+        TreeNode *h=new TreeNode(slow->val);
+        h->left=sortedListToBST(head);
+        h->right=sortedListToBST(slow->next);
+        return h;
     }
 };
