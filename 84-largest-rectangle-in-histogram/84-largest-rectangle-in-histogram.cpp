@@ -5,10 +5,10 @@ public:
         int n=heights.size();
         int ans=0;
         for(int i=0;i<=n;i++){
-            while(!s.empty() && (i==n ||  heights[s.top()]>=heights[i])){
+            while(!s.empty() && (i==n || heights[s.top()]>heights[i])){
                 int height=heights[s.top()];
+                int weight=0;
                 s.pop();
-                int weight;
                 if(s.empty()){
                     weight=i;
                 }
