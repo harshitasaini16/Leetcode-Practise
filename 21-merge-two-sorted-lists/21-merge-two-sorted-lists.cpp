@@ -10,21 +10,21 @@
  */
 class Solution {
 public:
-    ListNode* mergeTwoLists(ListNode* List1, ListNode* List2) {
-        if(List1==NULL && List2==NULL){
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        if(list1==NULL && list2==NULL){
             return NULL;
         }
-        if(List1==NULL && List2!=NULL){
-            return List2;
+        if(list1==NULL){
+            return list2;
         }
-        if(List1!=NULL && List2==NULL){
-            return List1;
+        if(list2==NULL){
+            return list1;
         }
-        if(List1->val<List2->val){
-            List1->next=mergeTwoLists(List1->next,List2);
-            return List1;
+        if(list1->val<=list2->val){
+            list1->next=mergeTwoLists(list1->next,list2);
+            return list1;
         }
-         List2->next=mergeTwoLists(List1,List2->next);
-            return List2;
+        list2->next=mergeTwoLists(list1,list2->next);
+        return list2;
     }
 };
