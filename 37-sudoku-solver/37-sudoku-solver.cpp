@@ -1,15 +1,21 @@
 class Solution {
 public:
-    bool valid(vector<vector<char>>&arr,int i,int j,int val){
-        for(int k=0;k<9;k++){
-            if(arr[i][k]==val or arr[k][j]==val){
+    bool f(int x,int y,vector<vector<char>>& board,char c){
+        for(int i=0;i<9;i++){
+            if(board[i][y]==c){
                 return false;
-            } 
+            }
         }
-        int x=i-i%3,y=j-j%3;
-        for(int k=0;k<3;k++){
-            for(int kk=0;kk<3;kk++){
-                if(arr[k+x][kk+y]==val){
+        for(int j=0;j<9;j++){
+            if(board[x][j]==c){
+                return false;
+            }
+        }
+        int a=x-x%3;
+        int b=y-y%3;
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                if(board[i+a][j+b]==c){
                     return false;
                 }
             }
@@ -17,17 +23,17 @@ public:
         return true;
     }
     bool fun(int x,int y,vector<vector<char>>& board){
-        if(x==9){
+        if(x>=9){
             return true;
         }
-        if(y==9){
+        if(y>=9){
             return fun(x+1,0,board);
         }
         if(board[x][y]!='.'){
             return fun(x,y+1,board);
         }
-        for(int c='1';c<='9';c++){
-            if(valid(board,x,y,c)){
+        for(char c='1';c<='9';c++){
+            if(f(x,y,board,c)){
                 board[x][y]=c;
                 if(fun(x,y+1,board)){
                     return true;
