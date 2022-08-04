@@ -1,23 +1,35 @@
 class Solution {
 public:
-    void fun(vector<vector<int>>&ans,vector<int>a,vector<int>arr,int sum,int i){
-        if(sum==0){
-            ans.push_back(a);
+    vector<vector<int>>ans;
+    void fun(int x,vector<int>& can,int target,vector<int>&v,int s){
+        if(s==target){
+            ans.push_back(v);
             return;
         }
-        if(i==arr.size()){
+        if(x>can.size()){
             return;
         }
-        fun(ans,a,arr,sum,i+1);
-        if(arr[i]<=sum){
-            a.push_back(arr[i]);
-            fun(ans,a,arr,sum-arr[i],i);
+        if(x==can.size()){
+            if(s==target){
+                ans.push_back(v);
+            }
+            return;
+        }
+        if(s+can[x]<=target){
+            fun(x+1,can,target,v,s);
+            s+=can[x];
+            v.push_back(can[x]);
+            fun(x,can,target,v,s);
+            v.pop_back();
+        }
+        else{
+            fun(x+1,can,target,v,s);
         }
     }
-    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<vector<int>>ans;
-        vector<int>a;
-        fun(ans,a,candidates,target,0);
+    vector<vector<int>> combinationSum(vector<int>& can, int target) {
+        sort(can.begin(),can.end());
+        vector<int>v;
+        fun(0,can,target,v,0);
         return ans;
     }
 };
