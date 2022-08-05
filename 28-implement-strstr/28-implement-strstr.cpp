@@ -1,46 +1,47 @@
 class Solution {
 public:
-    int strStr(string txt, string pat) {
-        int n=txt.length();
-        int m=pat.length();
-        int lps[m];
-        lps[0]=0;
-        int i=1;
-        int len=0;
-        while(i<m){
-            if(pat[i]==pat[len]){
+    vector<int>lps(string s){
+        int n=s.length();
+        vector<int>arr(n);
+        int len=0,i=1;
+        while(i<n){
+            if(s[i]==s[len]){
                 len++;
-                lps[i]=len;
+                arr[i]=len;
                 i++;
-            }
-            else{
+            }else{
                 if(len!=0){
-                    len=lps[len-1];
-                }
-                else{
-                    lps[i]=0;
+                    len=arr[len-1];
+                }else{
+                    arr[i]=0;
                     i++;
                 }
             }
         }
-        i=0;
-        int j=0;
+        return arr;
+    }
+    int strStr(string s, string p) {
+        vector<int>arr=lps(p);
+        int ans=-1;
+        if(s==p)
+            return 0;
+        int i=0,j=0;
+        int n=s.length(),m=p.length();
         while(i<n && j<m){
-            if(txt[i]==pat[j]){
+            if(s[i]==p[j]){
                 i++;
                 j++;
             }
             if(j==m){
-                return i-m;
+                return i-j;
             }
-            else if(i<n && pat[j]!=txt[i]){
-                if(j!=0){
-                    j=lps[j-1];
-                }
-                else{
-                    i=i+1;
-                }
+            else if(i<n && s[i]!=p[j]){
+                if(j!=0)
+                    j=arr[j-1];
+                else
+                    i++;  
             }
+            
         }
         return -1;
     }
