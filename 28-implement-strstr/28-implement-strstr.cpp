@@ -32,7 +32,6 @@ public:
             }
             if(j==m){
                 return i-m;
-                j=lps[m-j];
             }
             else if(i<n && pat[j]!=txt[i]){
                 if(j!=0){
