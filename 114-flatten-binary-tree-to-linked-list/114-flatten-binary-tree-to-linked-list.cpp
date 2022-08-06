@@ -19,13 +19,13 @@ public:
             flatten(root->left);
             TreeNode *l=root->left;
             TreeNode *r=root->right;
-            root->left=NULL;
-            root->right=l;
-            TreeNode *q=l;
-            while(q->right!=NULL){
-                q=q->right;
+            TreeNode *n=l;
+            while(n->right!=NULL){
+                n=n->right;
             }
-            q->right=r;
+            root->right=l;
+            n->right=r;
+            root->left=NULL;
         }
         if(root->right!=NULL){
             flatten(root->right);
