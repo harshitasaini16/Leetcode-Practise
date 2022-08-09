@@ -17,13 +17,13 @@ public:
                 if(s==end){
                     return ans;
                 }
-                m.erase(s);
                 for(int i=0;i<s.length();i++){
                     char d=s[i];
                     for(char c='a';c<='z';c++){
                         s[i]=c;
                         if(m.find(s)!=m.end()){
                             q.push(s);
+                            m.erase(s);
                         }
                     }
                     s[i]=d;
