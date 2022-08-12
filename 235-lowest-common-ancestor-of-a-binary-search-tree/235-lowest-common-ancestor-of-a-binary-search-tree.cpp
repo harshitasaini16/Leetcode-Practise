@@ -14,17 +14,12 @@ public:
         if(root==NULL){
             return NULL;
         }
-        if(root->val==p->val or root->val==q->val) {
-            return root;
+        if(p->val<root->val && q->val<root->val){
+            return lowestCommonAncestor(root->left,p,q);
         }
-        auto l=lowestCommonAncestor(root->left,p,q);
-        auto r=lowestCommonAncestor(root->right,p,q);
-        if(l and r){
-            return root;
+        if(p->val>root->val && q->val>root->val){
+            return lowestCommonAncestor(root->right,p,q);
         }
-        if(!l and r){
-            return r;
-        }
-        return l;
+        return root;
     }
 };
