@@ -1,29 +1,26 @@
-#define ll long long
 class Solution {
 public:
     int ans;
-    void merge(int l,int m,int r,vector<int>& nums){
-        int i=l;
-        int j=m+1;
-        vector<int>v;
-        while(i<=m && j<=r){
-            if((ll)nums[i]>((ll)2*nums[j])){
-                ans+=(m-i+1);
-                j++;
+    void f(int l,int m,int r,vector<int>& nums){
+        int x=l;
+        int y=m+1;
+        while(x<=m && y<=r){
+            if((long long)nums[x]>((long long)2*nums[y])){
+                ans+=(m-x+1);
+                y++;
             }
             else{
-                i++;
+                x++;
             }
         }
         sort(nums.begin()+l,nums.begin()+r+1);
     }
     void fun(int l,int r,vector<int>& nums){
-        int s=0;
         if(l<r){
             int mid=l+(r-l)/2;
             fun(l,mid,nums);
             fun(mid+1,r,nums);
-            merge(l,mid,r,nums);
+            f(l,mid,r,nums);
         }
     }
     int reversePairs(vector<int>& nums) {
