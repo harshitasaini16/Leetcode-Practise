@@ -1,32 +1,25 @@
 class Solution {
 public:
-    set<vector<int>>ans;
-    void fun(int x,vector<int>& nums,vector<int>v){
-        if(x>=nums.size()){
-            if(v.size()>=2){
-                ans.insert(v);
-                return;
-            }
+    void solving(vector<int>& nums, vector<vector<int>>& output, vector<int>& temp, int index){
+        if(index >= nums.size()){
+            if(temp.size() > 1)
+                output.push_back(temp);
             return;
         }
-        int i=x;
-        while(i<nums.size() && nums[i]==nums[x]){
-            i++;
+        if(index==0 || temp.size()==0 || nums[index] >= temp[temp.size()-1]){
+            temp.push_back(nums[index]);
+            solving(nums, output, temp, index+1);
+            temp.pop_back();
         }
-        fun(i,nums,v);
-        if(v.size()==0 || v[v.size()-1]<=nums[x]){
-            v.push_back(nums[x]);
-            fun(x+1,nums,v);
+        if(temp.size()==0 || temp[temp.size()-1]!=nums[index]){
+            solving(nums, output, temp, index+1);
         }
-    }
-    vector<vector<int>> findSubsequences(vector<int>& nums) {
-        ans.clear();
-        vector<int>v;
-        fun(0,nums,v);
-        vector<vector<int>>ss;
-        for(auto i:ans){
-            ss.push_back(i);
-        }
-        return ss;
-    }
+}
+	
+vector<vector<int>> findSubsequences(vector<int>& nums) {
+        vector<vector<int>> output;
+        vector<int> temp;
+        solving(nums, output, temp, 0);
+        return output;
+}
 };
