@@ -1,61 +1,116 @@
 class Solution {
 public:
-    vector<vector<string>>  ans;    //Stores all possible paths
-    
-    void DFS(string& beginWord, string& endWord, unordered_map<string, unordered_set<string>>& adj, vector<string> &path) {
-        path.push_back(beginWord);  //Push current word
-        if(beginWord == endWord)
+    bool neighbour(string a, string b){
+        int cnt = 0 ;
+        for(int i = 0 ; i < a.length() ; i++)
         {
-            ans.push_back(path);
-            path.pop_back();
-            return;
-        }
-        for(auto x : adj[beginWord])
-            DFS(x, endWord, adj, path);
-        
-        path.pop_back();    //Pop current word to Backtrack
-    }
-    
-    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
-        unordered_map<string, unordered_set<string>> adj;   //Adjacency List
-        unordered_set<string> dict(wordList.begin(),wordList.end());   //Insert WordList in SET
-        
-        //STEP-1: Find min-depth using BFS
-        queue<string> Q;    //For BFS traversal
-        Q.push(beginWord);  //Push start node (beginWord)
-        unordered_map<string, int> visited; //Key->String (Node)...Value->Level (Depth of traversal)
-        visited[beginWord] = 0; //Start node will always be at level 0
-        while(!Q.empty())
-        {
-            string curr = Q.front();
-            Q.pop();
-            string temp = curr;
-            for(int i = 0; i < curr.size(); ++i)    //For all characters
+            if(a[i] != b[i])
             {
-                for(char x = 'a'; x <= 'z'; ++x)    //Try all possible 26 letters
-                {
-                    if(temp[i] == x)    //Skip if letter is same as in original word
-                        continue;
-
-                    temp[i] = x;    
-                    if(dict.count(temp) > 0)    //Check if new word is present in wordList
-                    {
-                        if(visited.count(temp) == 0)    //check if the new word was already visited
-                        {
-                            visited[temp] = visited[curr] + 1;
-                            Q.push(temp);
-                            adj[curr].insert(temp);
-                        } 
-                        else if(visited[temp] == visited[curr] + 1) //If already visited and new word is the child (We should always move down)
-                            adj[curr].insert(temp);
-                    }
-                }
-                temp[i] = curr[i];  //Revert back temp to curr
+                cnt++ ;
             }
         }
-        //STEP-2: Find all possible paths at min-depth using DFS
-        vector<string> path;
-        DFS(beginWord, endWord, adj, path); //Find all possible paths with min-depth
-        return ans; 
+        return cnt == 1 ;
+    }
+    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+        wordList.insert(wordList.begin(), beginWord);
+        for(int i = 1 ; i < wordList.size() ; i++)
+        {
+            if(wordList[i] == wordList[0]) // string compare
+            {
+                wordList[i] = wordList.back() ;
+                wordList.pop_back() ;
+                break ;
+            }
+        }
+        map<string, int> wti ; // word to index
+        for(int i = 0 ; i < wordList.size() ; i++)
+        {
+            wti.insert({wordList[i], i}) ;
+        }
+        if(!wti.count(endWord)) 
+        {
+            return {} ;
+        }
+        vector<vector<int>> edges(wti.size()) ;
+        for(int i = 0 ; i < wordList.size() ; i++)
+        {
+            for(int j = 0 ; j < wordList.size() ; j++)
+            {
+                if(i != j)
+                {
+                    if(neighbour(wordList[i], wordList[j]))
+                    {
+                        edges[i].push_back(j) ;
+                    }
+                }
+            }
+        }
+        // BFS  
+        int start_node = 0 , target_node = wti[endWord] , r = 0 , min_step = INT_MAX ;
+        vector<int> vis(wordList.size(), INT_MAX) ;   
+        vis[start_node] = 0 ;
+        queue<int> q ;   
+        q.push(start_node) ;
+        while(!q.empty())
+        {
+            int sz  = q.size() ;
+            for (int i = 0 ; i < sz ; i++)
+            {
+                int fr = q.front() ;  
+                q.pop() ;
+                if(fr == target_node)
+                {
+                    min_step = min(min_step , r) ;
+                }
+                for(int j = 0 ; j < edges[fr].size() ; j++)
+                {
+                    int update_node = edges[fr][j] ;
+                    if(r + 1 < vis[update_node])
+                    {
+                        vis[update_node] = r + 1 ;
+                        q.push(update_node);
+                    }
+                }
+            }
+            r++ ;
+        }
+        if(min_step == INT_MAX)
+        {
+            return {} ;
+        }
+        queue<vector<string>> q2 ; 
+        q2.push({wordList[target_node]}) ;
+        r = min_step ;
+        while(r)
+        {
+             int sz  = q2.size() ;
+             for(int i = 0 ; i < sz ; i++)
+             {
+                vector<string> seq = q2.front() ;
+                q2.pop();
+                string back = seq.back() ;
+                int curr = wti[back] ;
+                for (int j = 0 ; j < edges[curr].size() ; j++)
+                {
+                    int new_node = edges[curr][j] ;
+                    if (vis[new_node] == r - 1)
+                    {
+                        seq.push_back(wordList[new_node]) ;
+                        q2.push(seq) ;
+                        seq.pop_back() ;
+                    }
+                }
+            }
+            r-- ;
+        }
+        vector<vector<string>> ans;
+        while(!q2.empty())
+        {
+            vector<string> temp = q2.front() ;
+            q2.pop() ;
+            reverse(begin(temp) , end(temp)) ;
+            ans.push_back(temp) ;
+        }
+        return ans ;
     }
 };
