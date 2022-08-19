@@ -17,7 +17,7 @@ public:
         }
         vector<int>ans;
         stack<TreeNode*>s;
-        while(!s.empty() || root!=NULL){
+        while(root!=NULL || !s.empty()){
             if(root!=NULL){
                 s.push(root);
                 root=root->left;
@@ -25,13 +25,13 @@ public:
             else{
                 TreeNode *n=s.top()->right;
                 if(n==NULL){
-                    TreeNode *x=s.top();
+                    n=s.top();
+                    ans.push_back(n->val);
                     s.pop();
-                    ans.push_back(x->val);
-                    while(!s.empty() && s.top()->right==x){
-                        x=s.top();
-                        ans.push_back(x->val);
+                    while(!s.empty() && n==s.top()->right){
+                        n=s.top();
                         s.pop();
+                        ans.push_back(n->val);
                     }
                 }
                 else{
