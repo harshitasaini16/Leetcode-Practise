@@ -5,14 +5,14 @@ public:
         if(n==1 && m==1){
             return 1;
         }
-        if(n==1){
-            return fun(n,m-1);
-        }
-        else if(m==1){
-            return fun(n-1,m);
-        }
         if(dp[n][m]!=-1){
             return dp[n][m];
+        }
+        if(m==1){
+            return dp[n][m]=fun(n-1,m);
+        }
+        if(n==1){
+            return dp[n][m]=fun(n,m-1);
         }
         return dp[n][m]=fun(n-1,m)+fun(n,m-1);
     }
