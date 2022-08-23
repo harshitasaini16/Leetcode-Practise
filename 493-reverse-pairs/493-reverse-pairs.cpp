@@ -1,28 +1,43 @@
 class Solution {
 public:
-    int f(int l,int m,int r,vector<int>& nums){
-        int x=l;
-        int y=m+1;
-        int s=0;
-        while(x<=m && y<=r){
-            if((long long)nums[x]>((long long)2*nums[y])){
-                s+=(m-x+1);
-                y++;
+    int merge(int l,int m,int r,vector<int>& nums){
+        int i=l;
+        int j=m+1;
+        int ans=0;
+        vector<int>v;
+        while(i<=m && j<=r){
+            if(nums[i]>(long long)2*nums[j]){
+                ans+=(m-i)+1;
+                v.push_back(nums[j]);
+                j++;
             }
             else{
-                x++;
+                v.push_back(nums[i]);
+                i++;
             }
         }
-        sort(nums.begin()+l,nums.begin()+r+1);
-        return s;
+        while(i<=m){
+            v.push_back(nums[i]);
+            i++;
+        }
+        while(j<=r){
+            v.push_back(nums[j]);
+            j++;
+        }
+        sort(v.begin(),v.end());
+        for(int i=0;i<v.size();i++){
+            nums[i+l]=v[i];
+        }
+        return ans;
     }
     int fun(int l,int r,vector<int>& nums){
         if(l<r){
             int mid=l+(r-l)/2;
-            int x1=fun(l,mid,nums);
-            int x2=fun(mid+1,r,nums);
-            int x3=f(l,mid,r,nums);
-            return x1+x2+x3;
+            int ans=0;
+            ans+=fun(l,mid,nums);
+            ans+=fun(mid+1,r,nums);
+            ans+=merge(l,mid,r,nums);
+            return ans;
         }
         return 0;
     }
