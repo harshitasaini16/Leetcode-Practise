@@ -1,22 +1,28 @@
 class Solution {
 public:
-    map<pair<int,int>,int>dp;
-    void fun(int x,int y,vector<vector<int>>& image,int oc,int nc,int n,int m){
-        if(x<0 || y<0 || x>=n || y>=m || image[x][y]!=oc || dp[{x,y}]!=0){
-            return;
+    int dx[4]={-1,0,0,1};
+    int dy[4]={0,1,-1,0};
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int c=image[sr][sc];
+        if(c==color){
+            return image;
         }
-        dp[{x,y}]++;
-        image[x][y]=nc;
-        fun(x+1,y,image,oc,nc,n,m);
-        fun(x-1,y,image,oc,nc,n,m);
-        fun(x,y+1,image,oc,nc,n,m);
-        fun(x,y-1,image,oc,nc,n,m);
-    }
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int nc) {
-        dp.clear();
-        int n=image.size();
-        int m=image[0].size();
-        fun(sr,sc,image,image[sr][sc],nc,n,m);
+        queue<pair<int,int>>q;
+        q.push({sr,sc});
+        image[sr][sc]=color;
+        while(!q.empty()){
+            int x=q.front().first;
+            int y=q.front().second;
+            q.pop();
+            for(int i=0;i<4;i++){
+                int xx=x+dx[i];
+                int yy=y+dy[i];
+                if(xx>=0 && y>=0 && xx<image.size() && yy<image[0].size() && image[xx][yy]==c){
+                    q.push({xx,yy});
+                    image[xx][yy]=color;
+                }
+            }
+        }
         return image;
     }
 };
