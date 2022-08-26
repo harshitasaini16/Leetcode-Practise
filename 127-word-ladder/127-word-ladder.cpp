@@ -1,33 +1,32 @@
 class Solution {
 public:
-    int ladderLength(string begin, string end, vector<string>& w) {
-        unordered_map<string,int>m;
-        for(int i=0;i<w.size();i++){
-            m[w[i]]++;
+    int ladderLength(string bw, string ew, vector<string>& v) {
+        map<string,int>m;
+        for(int i=0;i<v.size();i++){
+            m[v[i]]++;
         }
-        queue<string>q;
-        q.push(begin);
-        int ans=0;
+        queue<pair<string,int>>q;
+        q.push({bw,1});
+        m[bw]=0;
         while(!q.empty()){
-            ans++;
-            int size=q.size();
-            while(size--){
-                string s=q.front();
-                q.pop();
-                if(s==end){
-                    return ans;
-                }
-                for(int i=0;i<s.length();i++){
-                    char d=s[i];
-                    for(char c='a';c<='z';c++){
+            string s=q.front().first;
+            int x=q.front().second;
+            if(s==ew){
+                return x;
+            }
+            q.pop();
+            for(int i=0;i<s.length();i++){
+                char ch=s[i];
+                for(char c='a';c<='z';c++){
+                    if(c!=ch){
                         s[i]=c;
-                        if(m.find(s)!=m.end()){
-                            q.push(s);
-                            m.erase(s);
+                        if(m[s]>0){
+                            m[s]=0;
+                            q.push({s,x+1});
                         }
                     }
-                    s[i]=d;
                 }
+                s[i]=ch;
             }
         }
         return 0;
