@@ -10,9 +10,6 @@ public:
             return;
         }
         if(x==can.size()){
-            if(s==target){
-                ans.push_back(v);
-            }
             return;
         }
         if(s+can[x]<=target){
