@@ -7,13 +7,16 @@ public:
                 st.push(s[i]);
             }
             else{
-                if(!st.empty() && s[i]==')' && st.top()=='('){
+                if(st.empty()){
+                    return false;
+                }
+                else if(s[i]=='}' && st.top()=='{'){
                     st.pop();
                 }
-                else if(!st.empty() && s[i]==']' && st.top()=='['){
+                else if(s[i]==')' && st.top()=='('){
                     st.pop();
                 }
-                else if(!st.empty() && s[i]=='}' && st.top()=='{'){
+                else if(s[i]==']' && st.top()=='['){
                     st.pop();
                 }
                 else{
