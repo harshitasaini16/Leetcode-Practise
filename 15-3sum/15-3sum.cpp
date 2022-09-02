@@ -1,9 +1,9 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        int n=nums.size();
-        vector<vector<int>> ans;
+        vector<vector<int>>ans;
         sort(nums.begin(),nums.end());
+        int n=nums.size();
         for(int i=0;i<n-2;i++){
             if(i!=0 && nums[i]==nums[i-1]){
                 continue;
@@ -11,23 +11,22 @@ public:
             int j=i+1;
             int k=n-1;
             while(j<k){
-                int s=nums[i]+nums[j]+nums[k];
-                if(s==0){
+                if(nums[i]+nums[j]+nums[k]==0){
                     ans.push_back({nums[i],nums[j],nums[k]});
                     int x=nums[j];
                     int y=nums[k];
-                    while(j<k && nums[j]==x){
+                    while(j<k && x==nums[j]){
                         j++;
                     }
-                    while(j<k && nums[k]==y){
+                    while(j<k && y==nums[k]){
                         k--;
                     }
                 }
-                else if(s<0){
-                    j++;
-                }
-                else if(s>0){
+                else if(nums[i]+nums[j]+nums[k]>0){
                     k--;
+                }
+                else{
+                    j++;
                 }
             }
         }
