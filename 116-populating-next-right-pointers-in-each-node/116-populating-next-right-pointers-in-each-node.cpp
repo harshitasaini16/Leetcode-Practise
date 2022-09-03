@@ -26,17 +26,22 @@ public:
         q.push(root);
         while(!q.empty()){
             int size=q.size();
-            Node *x=new Node(-1);
+            Node *temp=NULL;
             while(size--){
                 Node *n=q.front();
-                x->next=n;
-                x=x->next;
                 q.pop();
                 if(n->left!=NULL){
                     q.push(n->left);
                 }
                 if(n->right!=NULL){
                     q.push(n->right);
+                }
+                if(temp==NULL){
+                    temp=n;
+                }
+                else{
+                    temp->next=n;
+                    temp=n;
                 }
             }
         }
