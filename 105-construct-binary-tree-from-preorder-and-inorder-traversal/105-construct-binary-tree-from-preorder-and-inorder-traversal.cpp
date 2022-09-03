@@ -12,24 +12,22 @@
 class Solution {
 public:
     map<int,int>m;
-    int x;
-    TreeNode* fun(int l,int r,vector<int>& preorder){
+    TreeNode *fun(int l,int r,vector<int>& pre,int &x){
         if(l<=r){
-            TreeNode *n=new TreeNode(preorder[x]);
-            int d=m[preorder[x]];
-            x++;
-            n->left=fun(l,d-1,preorder);
-            n->right=fun(d+1,r,preorder);
-            return n;
+            TreeNode *root=new TreeNode(pre[x++]);
+            int mid=m[root->val];
+            root->left=fun(l,mid-1,pre,x);
+            root->right=fun(mid+1,r,pre,x);
+            return root;
         }
         return NULL;
     }
-    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+    TreeNode* buildTree(vector<int>& pre, vector<int>& in) {
         m.clear();
-        for(int i=0;i<inorder.size();i++){
-            m[inorder[i]]=i;
+        for(int i=0;i<in.size();i++){
+            m[in[i]]=i;
         }
-        x=0;
-        return fun(0,preorder.size()-1,preorder);
+        int x=0;
+        return fun(0,in.size()-1,pre,x);
     }
 };
