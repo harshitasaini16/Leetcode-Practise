@@ -10,30 +10,32 @@
  */
 class Solution {
 public:
-    ListNode *merge(ListNode *h1,ListNode *h2){
-        if(h1==NULL && h2==NULL){
-            return NULL;
-        }
-        if(h1==NULL){
-            return h2;
-        }
-        if(h2==NULL){
-            return h1;
-        }
-        if(h1->val<h2->val){
-            h1->next=merge(h1->next,h2);
-            return h1;
-        }
-        h2->next=merge(h1,h2->next);
-        return h2;
-    }
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        if(lists.size()==0){
-            return NULL;
+        priority_queue<pair<int,ListNode*>,vector<pair<int,ListNode*>>,greater<pair<int,ListNode*>>>q;
+        for(int i=0;i<lists.size();i++){
+            if(lists[i]!=NULL){
+                q.push({lists[i]->val,lists[i]});
+            }
         }
-        ListNode* head=lists[0];
-        for(int i=1;i<lists.size();i++){
-            head=merge(lists[i],head);
+        ListNode *head=NULL;
+        ListNode *temp=NULL;
+        while(!q.empty()){
+            ListNode* x=q.top().second;
+            q.pop();
+            if(head==NULL){
+                head=x;
+                temp=head;
+                if(x->next!=NULL){
+                    q.push({x->next->val,x->next});
+                }
+            }
+            else{
+                temp->next=x;
+                temp=temp->next;
+                if(x->next!=NULL){
+                    q.push({x->next->val,x->next});
+                }
+            }
         }
         return head;
     }
