@@ -7,7 +7,7 @@ public:
         while(l<=r){
             int mid=l+(r-l)/2;
             if((long long)mid*mid<=x){
-                ans=max(ans,mid);
+                ans=mid;
                 l=mid+1;
             }
             else{
