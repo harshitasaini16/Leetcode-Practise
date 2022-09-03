@@ -1,9 +1,9 @@
 class Solution {
 public:
     void setZeroes(vector<vector<int>>& mat) {
-        bool f=false;
         int n=mat.size();
         int m=mat[0].size();
+        bool f=false;
         for(int i=0;i<n;i++){
             if(mat[i][0]==0){
                 f=true;
