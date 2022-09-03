@@ -1,18 +1,18 @@
 class Solution {
 public:
-    vector<int> plusOne(vector<int>& digits) {
-        vector<int>ans;
+    vector<int> plusOne(vector<int>& a) {
+        reverse(a.begin(),a.end());
         int c=1;
-        int n=digits.size();
-        for(int i=n-1;i>=0;i--){
-            int x=digits[i]+c;
-            ans.push_back(x%10);
+        for(int i=0;i<a.size();i++){
+            int x=a[i]+c;
+            a[i]=x%10;
             c=x/10;
         }
-        if(c>0){
-            ans.push_back(c);
+        while(c>0){
+            a.push_back(c%10);
+            c=c/10;
         }
-        reverse(ans.begin(),ans.end());
-        return ans;
+        reverse(a.begin(),a.end());
+        return a;
     }
 };
