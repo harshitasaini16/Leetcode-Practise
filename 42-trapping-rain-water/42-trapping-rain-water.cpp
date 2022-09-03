@@ -1,30 +1,30 @@
 class Solution {
-public: 
+public:
     int trap(vector<int>& height) {
-        int n=height.size();
-        int i=1;
-        int j=n-2;
-        int l=height[0];
-        int r=height[n-1];
         int ans=0;
-        while(i<=j){
-            if(l<=r){
-                if(height[i]<l){
-                    ans+=l-height[i];
+        int n=height.size();
+        int ml=height[0];
+        int mr=height[n-1];
+        int l=1;
+        int r=n-2;
+        while(l<=r){
+            if(ml<mr){
+                if(height[l]<ml){
+                    ans+=(ml-height[l]);
                 }
                 else{
-                    l=height[i];
+                    ml=height[l];
                 }
-                i++;
+                l++;
             }
             else{
-                if(height[j]<r){
-                    ans+=r-height[j];
+                if(height[r]<mr){
+                    ans+=(mr-height[r]);
                 }
                 else{
-                    r=height[j];
+                    mr=height[r];
                 }
-                j--;
+                r--;
             }
         }
         return ans;
