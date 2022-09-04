@@ -1,14 +1,12 @@
 class Solution {
 public:
-    int titleToNumber(string col) {
-        int n=col.length();
-        int s=0;
-        int x=0;
-        for(int i=n-1;i>=0;i--){
-            int y=col[i]-'A'+1;
-            s+=pow(26,x)*y;
-            x++;
+    int titleToNumber(string s) {
+        int ans=0;
+        long long x=1;
+        for(int i=s.length()-1;i>=0;i--){
+            ans+=(s[i]-'A'+1)*x;
+            x=x*26;
         }
-        return s;
+        return ans;
     }
 };
