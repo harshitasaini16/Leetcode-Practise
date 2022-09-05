@@ -1,41 +1,32 @@
 class Solution {
-    
-    vector<vector<int>> dirs = {{-1,0},{0,-1},{0,1}, {1,0}};
-    
-    int dfs(vector<vector<int>>& matrix, int r, int c, vector<vector<int>>& dp, int prev) {
-        if(r < 0 || r >= matrix.size()) return 0;
-        if(c < 0 || c >= matrix[r].size()) return 0;
-        if(matrix[r][c] <= prev) return 0;
-        
-        if(dp[r][c] != -1) return dp[r][c];
-        int best = 0;
-        
-        for(auto& dir : dirs) {
-            int nr = dir[0] + r;
-            int nc = dir[1] + c;
-            int cur = dfs(matrix, nr, nc, dp, matrix[r][c]);
-            best = max(best, cur);
-        }
-        
-        return dp[r][c] = best + 1;
-    }
-    
 public:
-    int longestIncreasingPath(vector<vector<int>>& matrix) {
-        int ROWS = matrix.size();
-        int COLS = matrix[0].size();
-        
-        vector<vector<int>> dp(ROWS, vector<int>(COLS, -1));
-        
-        int ans = 0;
-        
-        for(int r = 0; r < ROWS; r++) {
-            for(int c = 0; c < COLS; c++) {
-                int lip = dfs(matrix, r, c, dp, -1000000);
-                ans = max(ans, lip);
+    int longestIncreasingPath(vector<vector<int>>& mat) {
+        int n=mat.size();
+        int m=mat[0].size();
+        vector<vector<int>>ans(n,vector<int>(m,1));
+        queue<pair<int,int>>q;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                q.push({i,j});
             }
         }
-        
-        return ans;
+        int dx[4]={-1,0,0,1};
+        int dy[4]={0,-1,1,0};
+        int mx=1;
+        while(!q.empty()){
+            int x=q.front().first;
+            int y=q.front().second;
+            q.pop();
+            mx=max(mx,ans[x][y]);
+            for(int i=0;i<4;i++){
+                int xx=x+dx[i];
+                int yy=y+dy[i];
+                if(xx>=0 && yy>=0 && xx<n && yy<m && mat[xx][yy]>mat[x][y] && ans[xx][yy]<=ans[x][y]){
+                    ans[xx][yy]=ans[x][y]+1;
+                    q.push({xx,yy});
+                }
+            }
+        }
+        return mx;
     }
 };
