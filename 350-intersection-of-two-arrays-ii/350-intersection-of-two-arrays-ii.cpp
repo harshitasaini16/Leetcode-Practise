@@ -6,10 +6,10 @@ public:
             m[nums1[i]]++;
         }
         vector<int>v;
-        for(int j=0;j<nums2.size();j++){
-            if(m[nums2[j]]>0){
-                v.push_back(nums2[j]);
-                m[nums2[j]]--;
+        for(int i=0;i<nums2.size();i++){
+            if(m[nums2[i]]>0){
+                v.push_back(nums2[i]);
+                m[nums2[i]]--;
             }
         }
         return v;
