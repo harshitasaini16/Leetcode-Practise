@@ -2,7 +2,7 @@ class Solution {
 public:
     bool fun(TreeNode*root){
         if(root==NULL){
-            return false;
+            return  false;
         }
         if(root->left==NULL and root->right==NULL){
             if(root->val==1){
