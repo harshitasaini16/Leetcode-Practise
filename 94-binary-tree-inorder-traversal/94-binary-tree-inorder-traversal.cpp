@@ -23,10 +23,10 @@ public:
                 if(s.empty()){
                     return ans;
                 }
-                TreeNode *x=s.top();
-                ans.push_back(x->val);
-                root=x->right;
+                TreeNode* n=s.top();
+                ans.push_back(n->val);
                 s.pop();
+                root=n->right;
             }
         }
         return ans;
