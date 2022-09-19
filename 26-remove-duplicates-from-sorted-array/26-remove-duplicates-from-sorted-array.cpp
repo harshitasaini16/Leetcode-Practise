@@ -7,12 +7,9 @@ public:
         while(i<n && j<n){
             if(nums[i]!=nums[i-1] && nums[i]!=nums[j-1]){
                 swap(nums[i],nums[j]);
-                i++;
                 j++;
             }
-            else{
-                i++;
-            }
+            i++;
         }
         return j;
     }
