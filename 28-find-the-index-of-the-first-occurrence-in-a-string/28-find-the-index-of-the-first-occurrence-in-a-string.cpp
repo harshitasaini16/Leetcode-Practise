@@ -1,43 +1,46 @@
 class Solution {
 public:
-    int strStr(string s1, string s2) {
-        int n=s1.length();
-        int m=s2.length();
+    int strStr(string s, string p) {
+        int n=s.length();
+        int m=p.length();
         vector<int>lps(m,0);
-        int len=0;
         int i=1;
+        int len=0;
         while(i<m){
-            if(s2[i]==s2[len]){
+            if(p[i]==p[len]){
                 len++;
                 lps[i]=len;
                 i++;
             }
             else{
-                if(len==0){
-                    lps[i]=0;
-                    i++;
+                if(len!=0){
+                    len=lps[len-1];
                 }
                 else{
-                    len=lps[len-1];
+                    lps[i]=0;
+                    i++;
                 }
             }
         }
         i=0;
         int j=0;
         while(i<n && j<m){
-            if(s1[i]==s2[j]){
-                i++;
+            if(s[i]==p[j]){
                 j++;
+                i++;
+                if(j>=m){
+                   return i-m;
+                }
+                if(i>=n){
+                    return -1;
+                }
             }
-            if(j==m){
-                return i-m;
-            }
-            else if(i<n && s1[i]!=s2[j]){
-                if(j==0){
-                    i++;
+            else{
+                if(j!=0){
+                    j=lps[j-1];
                 }
                 else{
-                    j=lps[j-1];
+                    i++;
                 }
             }
         }
