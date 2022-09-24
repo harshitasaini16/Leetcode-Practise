@@ -35,18 +35,17 @@ public:
             }
             n1=n1->next->next;
         }
-        Node *temp1=head;
-        Node *temp2=head->next;
-        head=head->next;
-        while(temp1!=NULL){
-            temp1->next=temp2->next;
-            temp1=temp1->next;
-            if(temp1==NULL){
+        n1=head;
+        Node *n2=head->next;
+        while(n1!=NULL && n2!=NULL){
+            n1->next=n2->next;
+            n1=n1->next;
+            if(n1==NULL){
                 break;
             }
-            temp2->next=temp1->next;
-            temp2=temp2->next;
+            n2->next=n1->next;
+            n2=n2->next;
         }
-        return head;
+        return h;
     }
 };
