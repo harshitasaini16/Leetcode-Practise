@@ -27,15 +27,13 @@ public:
             temp->next=n;
             temp=n->next;
         }
-        temp=head;
-        while(temp!=NULL){
-            if(temp->random==NULL){
-                temp->next->random=NULL;
+        Node *h=head->next;
+        Node *n1=head;
+        while(n1!=NULL){
+            if(n1->random!=NULL){
+                n1->next->random=n1->random->next;
             }
-            else{
-                temp->next->random=temp->random->next;
-            }
-            temp=temp->next->next;
+            n1=n1->next->next;
         }
         Node *temp1=head;
         Node *temp2=head->next;
