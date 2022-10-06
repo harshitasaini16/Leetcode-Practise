@@ -1,19 +1,22 @@
 class Solution {
 public:
     vector<vector<string>>ans;
-    bool f(int x,int y,vector<string>v){
-        int i=x;
-        int j=y;
+    bool safe(int x,int y,vector<string>v){
         int n=v.size();
-        while(i>=0 && j>=0 && i<n && j<n){
-            if(v[i][j]=='Q'){
+        int m=v[0].size();
+        for(int i=0;i<n;i++){
+            if(v[i][y]=='Q'){
                 return false;
             }
-            i--;
         }
-        i=x;
-        j=y;
-        while(i>=0 && j>=0 && i<n && j<n){
+        for(int j=0;j<m;j++){
+            if(v[x][j]=='Q'){
+                return false;
+            }
+        }
+        int i=x;
+        int j=y;
+        while(i>=0 && j>=0 && i<n && j<m){
             if(v[i][j]=='Q'){
                 return false;
             }
@@ -22,7 +25,7 @@ public:
         }
         i=x;
         j=y;
-        while(i>=0 && j>=0 && i<n && j<n){
+        while(i>=0 && j>=0 && i<n && j<m){
             if(v[i][j]=='Q'){
                 return false;
             }
@@ -31,29 +34,30 @@ public:
         }
         return true;
     }
-    void fun(int x,vector<string>v,int n){
-        if(x==n){
+    void fun(int x,int n,vector<string>v){
+        if(x>=n){
             ans.push_back(v);
             return;
         }
         for(int i=0;i<n;i++){
-            if(f(x,i,v)){
+            if(safe(x,i,v)){
                 v[x][i]='Q';
-                fun(x+1,v,n);
+                fun(x+1,n,v);
                 v[x][i]='.';
             }
         }
     }
     vector<vector<string>> solveNQueens(int n) {
-        string s="";
-        for(int i=0;i<n;i++){
-            s+='.';
-        }
+        ans.clear();
         vector<string>v;
         for(int i=0;i<n;i++){
-            v.push_back(s);
+            string b="";
+            for(int j=0;j<n;j++){
+                b.push_back('.');
+            }
+            v.push_back(b);
         }
-        fun(0,v,n);
+        fun(0,n,v);
         return ans;
     }
 };
