@@ -1,8 +1,8 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
+// } Driver Code Ends
 class Solution{
 		
 
@@ -10,17 +10,16 @@ class Solution{
 	int maxSumIS(int arr[], int n)  
 	{  
 	    // Your code goes here
-	    vector<int>dp(n,0);
-	    int ans=0;
+	    int nums[n];
 	    for(int i=0;i<n;i++){
-	        dp[i]=arr[i];
-	        ans=max(ans,dp[i]);
+	        nums[i]=arr[i];
 	    }
+	    int ans=arr[0];
 	    for(int i=1;i<n;i++){
 	        for(int j=0;j<i;j++){
 	            if(arr[j]<arr[i]){
-	                dp[i]=max(dp[i],arr[i]+dp[j]);
-	                ans=max(ans,dp[i]);
+	                nums[i]=max(nums[i],nums[j]+arr[i]);
+	                ans=max(ans,nums[i]);
 	            }
 	        }
 	    }
@@ -28,7 +27,7 @@ class Solution{
 	}  
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 int main() 
 {
    	
@@ -54,4 +53,5 @@ int main()
     return 0;
 }
 
-  // } Driver Code Ends
+
+// } Driver Code Ends
