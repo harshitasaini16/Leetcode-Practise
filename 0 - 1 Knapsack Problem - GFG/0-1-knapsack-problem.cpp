@@ -1,37 +1,33 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include<bits/stdc++.h>
 using namespace std;
 
 
- // } Driver Code Ends
-class Solution
-{
+// } Driver Code Ends
+class Solution{
     public:
     //Function to return max value that can be put in knapsack of capacity W.
-    map<pair<int,int>,int>dp;
-    int f(int n, int wt[], int val[], int w){
-        if(w==0 || n==0){
+    int dp[1001][1001];
+    int fun(int n,int *wt,int *val,int w){
+        if(n==0 || w==0){
             return 0;
         }
-        if(dp.find({n,w})!=dp.end()){
-            return dp[{n,w}];
+        if(dp[n][w]!=-1){
+            return dp[n][w];
         }
-        if(w>=wt[n-1]){
-            return dp[{n,w}]=max(f(n-1,wt,val,w),val[n-1]+f(n-1,wt,val,w-wt[n-1]));
+        if(wt[n-1]>w){
+            return dp[n][w]=fun(n-1,wt,val,w);
         }
-        else{
-            return dp[{n,w}]=f(n-1,wt,val,w);
-        }
+        return dp[n][w]=max(fun(n-1,wt,val,w),val[n-1]+fun(n-1,wt,val,w-wt[n-1]));
     }
-    int knapSack(int w, int wt[], int val[], int n) 
-    { 
+    int knapSack(int w, int wt[], int val[], int n){ 
        // Your code here
-       dp.clear();
-       return f(n,wt,val,w);
+       memset(dp,-1,sizeof(dp));
+       return fun(n,wt,val,w);
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 int main()
  {
@@ -60,4 +56,5 @@ int main()
         
     }
 	return 0;
-}  // } Driver Code Ends
+}
+// } Driver Code Ends
