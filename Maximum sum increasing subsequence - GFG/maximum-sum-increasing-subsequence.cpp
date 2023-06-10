@@ -10,16 +10,17 @@ class Solution{
 	int maxSumIS(int arr[], int n)  
 	{  
 	    // Your code goes here
-	    int nums[n];
+	    int ans=0;
+	    vector<int>v;
 	    for(int i=0;i<n;i++){
-	        nums[i]=arr[i];
+	        v.push_back(arr[i]);
+	        ans=max(ans,arr[i]);
 	    }
-	    int ans=arr[0];
 	    for(int i=1;i<n;i++){
 	        for(int j=0;j<i;j++){
 	            if(arr[j]<arr[i]){
-	                nums[i]=max(nums[i],nums[j]+arr[i]);
-	                ans=max(ans,nums[i]);
+	                v[i]=max(v[i],arr[i]+v[j]);
+	                ans=max(ans,v[i]);
 	            }
 	        }
 	    }
