@@ -1,8 +1,8 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include<bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
+// } Driver Code Ends
 class Solution
 {
     public:
@@ -10,7 +10,7 @@ class Solution
     //order to find the critical floor.
     int dp[201][201];
     int fun(int e,int f){
-        if(e==0 || e==1 || f==0 || f==1){
+        if(e==1 || f==1 || e==0 || f==0){
             return f;
         }
         if(dp[e][f]!=-1){
@@ -19,19 +19,19 @@ class Solution
         int ans=INT_MAX;
         for(int i=1;i<=f;i++){
             int s=1+max(fun(e-1,i-1),fun(e,f-i));
-            ans=min(s,ans);
+            ans=min(ans,s);
         }
         return dp[e][f]=ans;
     }
-    int eggDrop(int e, int f) 
+    int eggDrop(int n, int k) 
     {
         // your code here
         memset(dp,-1,sizeof(dp));
-        return fun(e,f);
+        return fun(n,k);
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 int main()
 {
     //taking total testcases
@@ -48,4 +48,5 @@ int main()
     }
     return 0;
 }
-  // } Driver Code Ends
+
+// } Driver Code Ends
