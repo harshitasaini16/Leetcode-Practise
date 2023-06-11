@@ -1,32 +1,32 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
+// } Driver Code Ends
 class Solution
 {
 	public:
-	//Function to return list containing vertices in Topological order. 
-	void fun(int x,vector<int> adj[],stack<int>&s,map<int,int>&vis){
+	//Function to return list containing vertices in Topological order.
+	void fun(int x,vector<int> adj[],vector<int>&vis,stack<int>&s){
 	    vis[x]++;
 	    for(auto i:adj[x]){
 	        if(vis[i]==0){
-	            fun(i,adj,s,vis);
+	            fun(i,adj,vis,s);
 	        }
 	    }
 	    s.push(x);
 	}
-	vector<int> topoSort(int V, vector<int> adj[]) 
+	vector<int> topoSort(int n, vector<int> adj[]) 
 	{
 	    // code here
-	    map<int,int>vis;
+	    vector<int>ans;
 	    stack<int>s;
-	    for(int i=0;i<V;i++){
+	    vector<int>vis(n,0);
+	    for(int i=0;i<n;i++){
 	        if(vis[i]==0){
-	            fun(i,adj,s,vis);
+	            fun(i,adj,vis,s);
 	        }
 	    }
-	    vector<int>ans;
 	    while(!s.empty()){
 	        ans.push_back(s.top());
 	        s.pop();
@@ -35,7 +35,7 @@ class Solution
 	}
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 /*  Function to check if elements returned by user
 *   contains the elements in topological sorted form
@@ -82,4 +82,5 @@ int main() {
     }
     
     return 0;
-}  // } Driver Code Ends
+}
+// } Driver Code Ends
