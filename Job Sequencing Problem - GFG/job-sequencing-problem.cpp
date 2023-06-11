@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 // Program to find the maximum profit job sequence from a given array 
 // of jobs with deadlines and profits 
 #include<bits/stdc++.h>
@@ -13,7 +13,7 @@ struct Job
 }; 
 
 
- // } Driver Code Ends
+// } Driver Code Ends
 /*
 struct Job 
 { 
@@ -54,9 +54,10 @@ class Solution
         }
         return {x,s};
     }
+
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 // Driver program to test methods 
 int main() 
 { 
@@ -88,4 +89,5 @@ int main()
 }
 
 
-  // } Driver Code Ends
+
+// } Driver Code Ends
